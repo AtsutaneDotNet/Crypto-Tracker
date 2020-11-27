@@ -1,441 +1,431 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <link rel='icon' href='/static/favicon.ico' type='image/x-icon'/ >
-    <script type="text/javascript">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel='icon' href='/static/favicon.ico' type='image/x-icon'/ >
+  <script type="text/javascript">
     function loadref(time)
     {
     setTimeout("location.reload(true) ;",time) ;
     }
-    </script>
-
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
-
-
-    <title>Crypto Tracker</title>
-
-
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+  <title>Crypto Tracker</title>
 </head>
-<body onload="Javascript:loadref(30000)">
 
-
-    <div class="menu">
-
+<body onload="Javascript:loadref(30000)" class="w3-dark-gray">
+  <div class="w3-row-padding">
+    <div class="w3-half">
+      <h1 class="w3-text-green w3-wide">Crypto Tracker</h1>
+    </div>
+    <div class="w3-half w3-right-align">
+      <a href="https://github.com/CryptoGnome/Crypto-Tracker" target="_blank"><button class="w3-text-green w3-wide w3-button w3-hover-green w3-round-large w3-wide" type="button">Visit Github</button></a>
+    </div>
+  </div>
+  <div class="w3-row">
+    <div class="w3-card-4 w3-col m4 l3 w3-margin">
+      <header class="w3-container w3-green">
+        <h1>{{nickname1}}</h1>
+      </header>
+      <div class="w3-container w3-white" name="chart">
+        <canvas id="chart" width="400" height="200"></canvas>
+        <script>
+          // bar chart data
+          var barData = {
+            labels : [
+              {% for item in labels1 %}
+                "{{ item }}",
+              {% endfor %}
+            ],
+            datasets : [{
+            fillColor: "#008000",
+            strokeColor: "#FFFFFF",
+            pointColor: "#000000",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            bezierCurve : false,
+            data : [
+              {% for item in values1 %}
+                {{ item }},
+                {% endfor %}]
+              }
+            ]
+          }
+          Chart.defaults.global.animationSteps = 50;
+          Chart.defaults.global.tooltipYPadding = 16;
+          Chart.defaults.global.tooltipCornerRadius = 0;
+          Chart.defaults.global.tooltipTitleFontStyle = "normal";
+          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+          Chart.defaults.global.animationEasing = "easeOutBounce";
+          Chart.defaults.global.responsive = false;
+          Chart.defaults.global.scaleLineColor = "white";
+          Chart.defaults.global.scaleFontSize = 12;
+          // get bar chart canvas
+          var mychart = document.getElementById("chart").getContext("2d");
+          steps = 10
+          max = {{ max2 }}
+          // draw bar chart
+          var LineChartDemo = new Chart(mychart).Line(barData, {
+              scaleOverride: false,
+              scaleSteps: steps,
+              scaleStepWidth: Math.ceil(max / steps),
+              scaleStartValue: 0,
+              scaleShowVerticalLines: true,
+              scaleShowGridLines : true,
+              barShowStroke : false,
+              scaleShowLabels: true,
+              bezierCurve: false,
+          });
+        </script>
+      </div>
+      <footer class="w3-container w3-green">
+        <h5>Balance : ${{today}}</h5>
+        <h5 class="w3-half">Today's PNL : ${{pnl}}</h5>
+        <h5 class="w3-half">Today's % : {{daily}}%</h5>
+        <h5 class="w3-half">Overall's PNL : ${{allpnl}}</h5>
+        <h5 class="w3-half">Overall's % : {{allpct}}%</h5>
+        <h5 class="w3-half">Average's PNL : ${{avgpnl}}</h5>
+        <h5 class="w3-half">Average's % : {{avgpct}}%</h5>
+      </footer>
     </div>
 
-    <div class="container">
-
-        <div class="account">
-            <h2> {{nickname1}} </h2>
-            <h3> BALANCE &nbsp; &nbsp; &nbsp; &nbsp; ${{today}}</h3>
-            <h3> TODAY'S PNL &nbsp; &nbsp; &nbsp; ${{pnl}}</h3>
-            <h3> TODAY'S % &nbsp; &nbsp; &nbsp; &nbsp; {{daily}}%</h3>
-
-
-            <center>
-                <canvas id="chart" width="400" height="200"></canvas>
-                <script>
-                  // bar chart data
-                  var barData = {
-                    labels : [
-                      {% for item in labels1 %}
-                        "{{ item }}",
-                      {% endfor %}
-                    ],
-
-                    datasets : [{
-                      fillColor: "#28df99",
-                      strokeColor: "#FFFFFF",
-                      pointColor: "#FFFFFF",
-                      pointStrokeColor: "#fff",
-                      pointHighlightFill: "#fff",
-                      pointHighlightStroke: "rgba(151,187,205,1)",
-                      bezierCurve : false,
-                      data : [
-                    {% for item in values1 %}
-                          {{ item }},
-                        {% endfor %}]
-                      }
-                ]
-                  }
-
-                  Chart.defaults.global.animationSteps = 50;
-                  Chart.defaults.global.tooltipYPadding = 16;
-                  Chart.defaults.global.tooltipCornerRadius = 0;
-                  Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                  Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-                  Chart.defaults.global.animationEasing = "easeOutBounce";
-                  Chart.defaults.global.responsive = false;
-                  Chart.defaults.global.scaleLineColor = "white";
-                  Chart.defaults.global.scaleFontSize = 12;
-
-                  // get bar chart canvas
-                  var mychart = document.getElementById("chart").getContext("2d");
-
-                  steps = 10
-                  max = {{ max1 }}
-
-                  // draw bar chart
-                  var LineChartDemo = new Chart(mychart).Line(barData, {
-                    scaleOverride: false,
-                    scaleSteps: steps,
-                    scaleStepWidth: Math.ceil(max / steps),
-                    scaleStartValue: 0,
-                    scaleShowVerticalLines: true,
-                    scaleShowGridLines : true,
-                    barShowStroke : true,
-                    scaleShowLabels: true,
-                    bezierCurve: false,
-                  });
-
-                </script>
-            </center>
-
-        </div>
-        <div class="account">
-            <h2> {{nickname2}} </h2>
-            <h3> BALANCE &nbsp; &nbsp; &nbsp; &nbsp; ${{today2}}</h3>
-            <h3> TODAY'S PNL &nbsp; &nbsp; &nbsp; ${{pnl2}}</h3>
-            <h3> TODAY'S % &nbsp; &nbsp; &nbsp; &nbsp; {{daily2}}%</h3>
-
-            <center>
-                <canvas id="chart2" width="400" height="200"></canvas>
-                <script>
-                  // bar chart data
-                  var barData = {
-                    labels : [
-                      {% for item in labels2 %}
-                        "{{ item }}",
-                      {% endfor %}
-                    ],
-
-                    datasets : [{
-                      fillColor: "#28df99",
-                      strokeColor: "#FFFFFF",
-                      pointColor: "#FFFFFF",
-                      pointStrokeColor: "#fff",
-                      pointHighlightFill: "#fff",
-                      pointHighlightStroke: "rgba(151,187,205,1)",
-                      bezierCurve : false,
-                      data : [
-                    {% for item in values2 %}
-                          {{ item }},
-                        {% endfor %}]
-                      }
-                ]
-                  }
-
-                  Chart.defaults.global.animationSteps = 50;
-                  Chart.defaults.global.tooltipYPadding = 16;
-                  Chart.defaults.global.tooltipCornerRadius = 0;
-                  Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                  Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-                  Chart.defaults.global.animationEasing = "easeOutBounce";
-                  Chart.defaults.global.responsive = false;
-                  Chart.defaults.global.scaleLineColor = "black";
-                  Chart.defaults.global.scaleFontSize = 16;
-
-                  // get bar chart canvas
-                  var mychart = document.getElementById("chart2").getContext("2d");
-
-                  steps = 10
-                  max = {{ max2 }}
-                  // draw bar chart
-                  var LineChartDemo = new Chart(mychart).Line(barData, {
-                    scaleOverride: false,
-                    scaleSteps: steps,
-                    scaleStepWidth: Math.ceil(max / steps),
-                    scaleStartValue: 0,
-                    scaleShowVerticalLines: true,
-                    scaleShowGridLines : true,
-                    barShowStroke : true,
-                    scaleShowLabels: true,
-                    bezierCurve: false,
-                  });
-
-                </script>
-            </center>
-        </div>
-        <div class="account">
-            <h2> {{nickname3}} </h2>
-            <h3> BALANCE &nbsp; &nbsp; &nbsp; &nbsp; ${{today3}}</h3>
-            <h3> TODAY'S PNL &nbsp; &nbsp; &nbsp; ${{pnl3}}</h3>
-            <h3> TODAY'S % &nbsp; &nbsp; &nbsp; {{daily3}}%</h3>
-
-            <center>
-                <canvas id="chart3" width="400" height="200"></canvas>
-                <script>
-                  // bar chart data
-                  var barData = {
-                    labels : [
-                      {% for item in labels3 %}
-                        "{{ item }}",
-                      {% endfor %}
-                    ],
-
-                    datasets : [{
-                      fillColor: "#28df99",
-                      strokeColor: "#FFFFFF",
-                      pointColor: "#FFFFFF",
-                      pointStrokeColor: "#fff",
-                      pointHighlightFill: "#fff",
-                      pointHighlightStroke: "rgba(151,187,205,1)",
-                      bezierCurve : false,
-                      data : [
-                    {% for item in values3 %}
-                          {{ item }},
-                        {% endfor %}]
-                      }
-                ]
-                  }
-
-                  Chart.defaults.global.animationSteps = 50;
-                  Chart.defaults.global.tooltipYPadding = 16;
-                  Chart.defaults.global.tooltipCornerRadius = 0;
-                  Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                  Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-                  Chart.defaults.global.animationEasing = "easeOutBounce";
-                  Chart.defaults.global.responsive = false;
-                  Chart.defaults.global.scaleLineColor = "black";
-                  Chart.defaults.global.scaleFontSize = 16;
-
-                  // get bar chart canvas
-                  var mychart = document.getElementById("chart3").getContext("2d");
-
-                  steps = 11
-                  max = {{ max3 }}
-                  // draw bar chart
-                  var LineChartDemo = new Chart(mychart).Line(barData, {
-                    scaleOverride: false,
-                    scaleSteps: steps,
-                    scaleStepWidth: Math.ceil(max / steps),
-                    scaleStartValue: 0,
-                    scaleShowVerticalLines: true,
-                    scaleShowGridLines : true,
-                    barShowStroke : true,
-                    scaleShowLabels: true,
-                    bezierCurve: false,
-                  });
-
-                </script>
-            </center>
-        </div>
-
+    <div class="w3-card-4 w3-col m4 l3 w3-margin">
+      <header class="w3-container w3-green">
+        <h1>{{nickname2}}</h1>
+      </header>
+      <div class="w3-container w3-white" name="chart">
+        <canvas id="chart2" width="400" height="200"></canvas>
+        <script>
+          // bar chart data
+          var barData = {
+            labels : [
+              {% for item in labels2 %}
+                "{{ item }}",
+              {% endfor %}
+            ],
+            datasets : [{
+            fillColor: "#008000",
+            strokeColor: "#FFFFFF",
+            pointColor: "#000000",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            bezierCurve : false,
+            data : [
+              {% for item in values2 %}
+                {{ item }},
+                {% endfor %}]
+              }
+            ]
+          }
+          Chart.defaults.global.animationSteps = 50;
+          Chart.defaults.global.tooltipYPadding = 16;
+          Chart.defaults.global.tooltipCornerRadius = 0;
+          Chart.defaults.global.tooltipTitleFontStyle = "normal";
+          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+          Chart.defaults.global.animationEasing = "easeOutBounce";
+          Chart.defaults.global.responsive = false;
+          Chart.defaults.global.scaleLineColor = "white";
+          Chart.defaults.global.scaleFontSize = 12;
+          // get bar chart canvas
+          var mychart = document.getElementById("chart2").getContext("2d");
+          steps = 10
+          max = {{ max2 }}
+          // draw bar chart
+          var LineChartDemo = new Chart(mychart).Line(barData, {
+              scaleOverride: false,
+              scaleSteps: steps,
+              scaleStepWidth: Math.ceil(max / steps),
+              scaleStartValue: 0,
+              scaleShowVerticalLines: true,
+              scaleShowGridLines : true,
+              barShowStroke : true,
+              scaleShowLabels: true,
+              bezierCurve: false,
+          });
+        </script>
+      </div>
+      <footer class="w3-container w3-green">
+        <h5>Balance : ${{today2}}</h5>
+        <h5 class="w3-half">Today's PNL : ${{pnl2}}</h5>
+        <h5 class="w3-half">Today's % : {{daily2}}%</h5>
+        <h5 class="w3-half">Overall's PNL : ${{allpnl2}}</h5>
+        <h5 class="w3-half">Overall's % : {{allpct2}}%</h5>
+        <h5 class="w3-half">Average's PNL : ${{avgpnl2}}</h5>
+        <h5 class="w3-half">Average's % : {{avgpct2}}%</h5>
+      </footer>
     </div>
 
-    <div class="container2">
-        <div class="account">
-            <h2> {{nickname4}} </h2>
-            <h3> BALANCE &nbsp; &nbsp; &nbsp; &nbsp; ${{today4}}</h3>
-            <h3> TODAY'S PNL &nbsp; &nbsp; &nbsp; ${{pnl4}}</h3>
-            <h3> TODAY'S % &nbsp; &nbsp; &nbsp; &nbsp; {{daily4}}%</h3>
-                        <center>
-                <canvas id="chart4" width="400" height="200"></canvas>
-                <script>
-                  // bar chart data
-                  var barData = {
-                    labels : [
-                      {% for item in labels4 %}
-                        "{{ item }}",
-                      {% endfor %}
-                    ],
-
-                    datasets : [{
-                      fillColor: "#28df99",
-                      strokeColor: "#FFFFFF",
-                      pointColor: "#FFFFFF",
-                      pointStrokeColor: "#fff",
-                      pointHighlightFill: "#fff",
-                      pointHighlightStroke: "rgba(151,187,205,1)",
-                      bezierCurve : false,
-                      data : [
-                    {% for item in values4 %}
-                          {{ item }},
-                        {% endfor %}]
-                      }
-                ]
-                  }
-
-                  Chart.defaults.global.animationSteps = 50;
-                  Chart.defaults.global.tooltipYPadding = 16;
-                  Chart.defaults.global.tooltipCornerRadius = 0;
-                  Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                  Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-                  Chart.defaults.global.animationEasing = "easeOutBounce";
-                  Chart.defaults.global.responsive = false;
-                  Chart.defaults.global.scaleLineColor = "black";
-                  Chart.defaults.global.scaleFontSize = 16;
-
-                  // get bar chart canvas
-                  var mychart = document.getElementById("chart4").getContext("2d");
-
-                  steps = 11
-                  max = {{ max4 }}
-                  // draw bar chart
-                  var LineChartDemo = new Chart(mychart).Line(barData, {
-                    scaleOverride: false,
-                    scaleSteps: steps,
-                    scaleStepWidth: Math.ceil(max / steps),
-                    scaleStartValue: 0,
-                    scaleShowVerticalLines: true,
-                    scaleShowGridLines : true,
-                    barShowStroke : true,
-                    scaleShowLabels: true,
-                    bezierCurve: false,
-                  });
-
-                </script>
-            </center>
-
-        </div>
-        <div class="account">
-            <h2> {{nickname5}} </h2>
-            <h3> BALANCE &nbsp; &nbsp; &nbsp; &nbsp; ${{today5}}</h3>
-            <h3> TODAY'S PNL &nbsp; &nbsp; &nbsp; ${{pnl5}}</h3>
-            <h3> TODAY'S % &nbsp; &nbsp; &nbsp; &nbsp; {{daily5}}%</h3>
-
-            <center>
-                <canvas id="chart5" width="400" height="200"></canvas>
-                <script>
-                  // bar chart data
-                  var barData = {
-                    labels : [
-                      {% for item in labels5 %}
-                        "{{ item }}",
-                      {% endfor %}
-                    ],
-
-                    datasets : [{
-                      fillColor: "#28df99",
-                      strokeColor: "#FFFFFF",
-                      pointColor: "#FFFFFF",
-                      pointStrokeColor: "#fff",
-                      pointHighlightFill: "#fff",
-                      pointHighlightStroke: "rgba(151,187,205,1)",
-                      bezierCurve : false,
-                      data : [
-                    {% for item in values5 %}
-                          {{ item }},
-                        {% endfor %}]
-                      }
-                ]
-                  }
-
-                  Chart.defaults.global.animationSteps = 50;
-                  Chart.defaults.global.tooltipYPadding = 16;
-                  Chart.defaults.global.tooltipCornerRadius = 0;
-                  Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                  Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-                  Chart.defaults.global.animationEasing = "easeOutBounce";
-                  Chart.defaults.global.responsive = false;
-                  Chart.defaults.global.scaleLineColor = "black";
-                  Chart.defaults.global.scaleFontSize = 16;
-
-                  // get bar chart canvas
-                  var mychart = document.getElementById("chart5").getContext("2d");
-
-                  steps = 11
-                  max = {{ max5 }}
-                  // draw bar chart
-                  var LineChartDemo = new Chart(mychart).Line(barData, {
-                    scaleOverride: false,
-                    scaleSteps: steps,
-                    scaleStepWidth: Math.ceil(max / steps),
-                    scaleStartValue: 0,
-                    scaleShowVerticalLines: true,
-                    scaleShowGridLines : true,
-                    barShowStroke : true,
-                    scaleShowLabels: true,
-                    bezierCurve: false,
-                  });
-
-                </script>
-            </center>
-
-        </div>
-        <div class="account">
-            <h2> {{nickname6}} </h2>
-            <h3> BALANCE &nbsp; &nbsp; &nbsp; &nbsp; ${{today6}}</h3>
-            <h3> TODAY'S PNL &nbsp; &nbsp; &nbsp; ${{pnl6}}</h3>
-            <h3> TODAY'S % &nbsp; &nbsp; &nbsp; &nbsp; {{daily6}}%</h3>
-
-            <center>
-                <canvas id="chart6" width="400" height="200"></canvas>
-                <script>
-                  // bar chart data
-                  var barData = {
-                    labels : [
-                      {% for item in labels6 %}
-                        "{{ item }}",
-                      {% endfor %}
-                    ],
-
-                    datasets : [{
-                      fillColor: "#28df99",
-                      strokeColor: "#FFFFFF",
-                      pointColor: "#FFFFFF",
-                      pointStrokeColor: "#fff",
-                      pointHighlightFill: "#fff",
-                      pointHighlightStroke: "rgba(151,187,205,1)",
-                      bezierCurve : false,
-                      data : [
-                    {% for item in values6 %}
-                          {{ item }},
-                        {% endfor %}]
-                      }
-                ]
-                  }
-
-                  Chart.defaults.global.animationSteps = 50;
-                  Chart.defaults.global.tooltipYPadding = 16;
-                  Chart.defaults.global.tooltipCornerRadius = 0;
-                  Chart.defaults.global.tooltipTitleFontStyle = "normal";
-                  Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-                  Chart.defaults.global.animationEasing = "easeOutBounce";
-                  Chart.defaults.global.responsive = false;
-                  Chart.defaults.global.scaleLineColor = "black";
-                  Chart.defaults.global.scaleFontSize = 16;
-
-                  // get bar chart canvas
-                  var mychart = document.getElementById("chart6").getContext("2d");
-
-                  steps = 11
-                  max = {{ max6 }}
-                  // draw bar chart
-                  var LineChartDemo = new Chart(mychart).Line(barData, {
-                    scaleOverride: false,
-                    scaleSteps: steps,
-                    scaleStepWidth: Math.ceil(max / steps),
-                    scaleStartValue: 0,
-                    scaleShowVerticalLines: true,
-                    scaleShowGridLines : true,
-                    barShowStroke : true,
-                    scaleShowLabels: true,
-                    bezierCurve: false,
-                  });
-
-                </script>
-            </center>
-        </div>
-
-
-
-
-
-
+    <div class="w3-card-4 w3-col m4 l3 w3-margin">
+      <header class="w3-container w3-green">
+        <h1>{{nickname3}}</h1>
+      </header>
+      <div class="w3-container w3-white" name="chart">
+        <canvas id="chart3" width="400" height="200"></canvas>
+        <script>
+          // bar chart data
+          var barData = {
+            labels : [
+              {% for item in labels3 %}
+                "{{ item }}",
+              {% endfor %}
+            ],
+            datasets : [{
+            fillColor: "#008000",
+            strokeColor: "#FFFFFF",
+            pointColor: "#000000",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            bezierCurve : false,
+            data : [
+              {% for item in values3 %}
+                {{ item }},
+                {% endfor %}]
+              }
+            ]
+          }
+          Chart.defaults.global.animationSteps = 50;
+          Chart.defaults.global.tooltipYPadding = 16;
+          Chart.defaults.global.tooltipCornerRadius = 0;
+          Chart.defaults.global.tooltipTitleFontStyle = "normal";
+          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+          Chart.defaults.global.animationEasing = "easeOutBounce";
+          Chart.defaults.global.responsive = false;
+          Chart.defaults.global.scaleLineColor = "white";
+          Chart.defaults.global.scaleFontSize = 12;
+          // get bar chart canvas
+          var mychart = document.getElementById("chart3").getContext("2d");
+          steps = 10
+          max = {{ max3 }}
+          // draw bar chart
+          var LineChartDemo = new Chart(mychart).Line(barData, {
+              scaleOverride: false,
+              scaleSteps: steps,
+              scaleStepWidth: Math.ceil(max / steps),
+              scaleStartValue: 0,
+              scaleShowVerticalLines: true,
+              scaleShowGridLines : true,
+              barShowStroke : true,
+              scaleShowLabels: true,
+              bezierCurve: false,
+          });
+        </script>
+      </div>
+      <footer class="w3-container w3-green">
+        <h5>Balance : ${{today3}}</h5>
+        <h5 class="w3-half">Today's PNL : ${{pnl3}}</h5>
+        <h5 class="w3-half">Today's % : {{daily3}}%</h5>
+        <h5 class="w3-half">Overall's PNL : ${{allpnl3}}</h5>
+        <h5 class="w3-half">Overall's % : {{allpct3}}%</h5>
+        <h5 class="w3-half">Average's PNL : ${{avgpnl3}}</h5>
+        <h5 class="w3-half">Average's % : {{avgpct3}}%</h5>
+      </footer>
     </div>
 
-    <div class="footer">
-        <form action="https://github.com/CryptoGnome/Crypto-Tracker">
-            <input type="submit" value="Visit Github" />
-        </form>
+    <div class="w3-card-4 w3-col m4 l3 w3-margin">
+      <header class="w3-container w3-green">
+        <h1>{{nickname4}}</h1>
+      </header>
+      <div class="w3-container w3-white" name="chart">
+        <canvas id="chart4" width="400" height="200"></canvas>
+        <script>
+          // bar chart data
+          var barData = {
+            labels : [
+              {% for item in labels4 %}
+                "{{ item }}",
+              {% endfor %}
+            ],
+            datasets : [{
+            fillColor: "#008000",
+            strokeColor: "#FFFFFF",
+            pointColor: "#000000",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            bezierCurve : false,
+            data : [
+              {% for item in values4 %}
+                {{ item }},
+                {% endfor %}]
+              }
+            ]
+          }
+          Chart.defaults.global.animationSteps = 50;
+          Chart.defaults.global.tooltipYPadding = 16;
+          Chart.defaults.global.tooltipCornerRadius = 0;
+          Chart.defaults.global.tooltipTitleFontStyle = "normal";
+          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+          Chart.defaults.global.animationEasing = "easeOutBounce";
+          Chart.defaults.global.responsive = false;
+          Chart.defaults.global.scaleLineColor = "white";
+          Chart.defaults.global.scaleFontSize = 12;
+          // get bar chart canvas
+          var mychart = document.getElementById("chart4").getContext("2d");
+          steps = 10
+          max = {{ max4 }}
+          // draw bar chart
+          var LineChartDemo = new Chart(mychart).Line(barData, {
+              scaleOverride: false,
+              scaleSteps: steps,
+              scaleStepWidth: Math.ceil(max / steps),
+              scaleStartValue: 0,
+              scaleShowVerticalLines: true,
+              scaleShowGridLines : true,
+              barShowStroke : true,
+              scaleShowLabels: true,
+              bezierCurve: false,
+          });
+        </script>
+      </div>
+      <footer class="w3-container w3-green">
+        <h5>Balance : ${{today4}}</h5>
+        <h5 class="w3-half">Today's PNL : ${{pnl4}}</h5>
+        <h5 class="w3-half">Today's % : {{daily4}}%</h5>
+        <h5 class="w3-half">Overall's PNL : ${{allpnl4}}</h5>
+        <h5 class="w3-half">Overall's % : {{allpct4}}%</h5>
+        <h5 class="w3-half">Average's PNL : ${{avgpnl4}}</h5>
+        <h5 class="w3-half">Average's % : {{avgpct4}}%</h5>
+      </footer>
     </div>
 
+    <div class="w3-card-4 w3-col m4 l3 w3-margin">
+      <header class="w3-container w3-green">
+        <h1>{{nickname5}}</h1>
+      </header>
+      <div class="w3-container w3-white" name="chart">
+        <canvas id="chart5" width="400" height="200"></canvas>
+        <script>
+          // bar chart data
+          var barData = {
+            labels : [
+              {% for item in labels5 %}
+                "{{ item }}",
+              {% endfor %}
+            ],
+            datasets : [{
+            fillColor: "#008000",
+            strokeColor: "#FFFFFF",
+            pointColor: "#000000",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            bezierCurve : false,
+            data : [
+              {% for item in values5 %}
+                {{ item }},
+                {% endfor %}]
+              }
+            ]
+          }
+          Chart.defaults.global.animationSteps = 50;
+          Chart.defaults.global.tooltipYPadding = 16;
+          Chart.defaults.global.tooltipCornerRadius = 0;
+          Chart.defaults.global.tooltipTitleFontStyle = "normal";
+          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+          Chart.defaults.global.animationEasing = "easeOutBounce";
+          Chart.defaults.global.responsive = false;
+          Chart.defaults.global.scaleLineColor = "white";
+          Chart.defaults.global.scaleFontSize = 12;
+          // get bar chart canvas
+          var mychart = document.getElementById("chart5").getContext("2d");
+          steps = 10
+          max = {{ max5 }}
+          // draw bar chart
+          var LineChartDemo = new Chart(mychart).Line(barData, {
+              scaleOverride: false,
+              scaleSteps: steps,
+              scaleStepWidth: Math.ceil(max / steps),
+              scaleStartValue: 0,
+              scaleShowVerticalLines: true,
+              scaleShowGridLines : true,
+              barShowStroke : true,
+              scaleShowLabels: true,
+              bezierCurve: false,
+          });
+        </script>
+      </div>
+      <footer class="w3-container w3-green">
+        <h5>Balance : ${{today5}}</h5>
+        <h5 class="w3-half">Today's PNL : ${{pnl5}}</h5>
+        <h5 class="w3-half">Today's % : {{daily5}}%</h5>
+        <h5 class="w3-half">Overall's PNL : ${{allpnl5}}</h5>
+        <h5 class="w3-half">Overall's % : {{allpct5}}%</h5>
+        <h5 class="w3-half">Average's PNL : ${{avgpnl5}}</h5>
+        <h5 class="w3-half">Average's % : {{avgpct5}}%</h5>
+      </footer>
+    </div>
+
+    <div class="w3-card-4 w3-col m4 l3 w3-margin">
+      <header class="w3-container w3-green">
+        <h1>{{nickname6}}</h1>
+      </header>
+      <div class="w3-container w3-white" name="chart">
+        <canvas id="chart6" width="400" height="200"></canvas>
+        <script>
+          // bar chart data
+          var barData = {
+            labels : [
+              {% for item in labels6 %}
+                "{{ item }}",
+              {% endfor %}
+            ],
+            datasets : [{
+            fillColor: "#008000",
+            strokeColor: "#FFFFFF",
+            pointColor: "#000000",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            bezierCurve : false,
+            data : [
+              {% for item in values6 %}
+                {{ item }},
+                {% endfor %}]
+              }
+            ]
+          }
+          Chart.defaults.global.animationSteps = 50;
+          Chart.defaults.global.tooltipYPadding = 16;
+          Chart.defaults.global.tooltipCornerRadius = 0;
+          Chart.defaults.global.tooltipTitleFontStyle = "normal";
+          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+          Chart.defaults.global.animationEasing = "easeOutBounce";
+          Chart.defaults.global.responsive = false;
+          Chart.defaults.global.scaleLineColor = "white";
+          Chart.defaults.global.scaleFontSize = 12;
+          // get bar chart canvas
+          var mychart = document.getElementById("chart6").getContext("2d");
+          steps = 10
+          max = {{ max6 }}
+          // draw bar chart
+          var LineChartDemo = new Chart(mychart).Line(barData, {
+              scaleOverride: false,
+              scaleSteps: steps,
+              scaleStepWidth: Math.ceil(max / steps),
+              scaleStartValue: 0,
+              scaleShowVerticalLines: true,
+              scaleShowGridLines : true,
+              barShowStroke : true,
+              scaleShowLabels: true,
+              bezierCurve: false,
+          });
+        </script>
+      </div>
+      <footer class="w3-container w3-green">
+        <h5>Balance : ${{today6}}</h5>
+        <h5 class="w3-half">Today's PNL : ${{pnl6}}</h5>
+        <h5 class="w3-half">Today's % : {{daily6}}%</h5>
+        <h5 class="w3-half">Overall's PNL : ${{allpnl6}}</h5>
+        <h5 class="w3-half">Overall's % : {{allpct6}}%</h5>
+        <h5 class="w3-half">Average's PNL : ${{avgpnl6}}</h5>
+        <h5 class="w3-half">Average's % : {{avgpct6}}%</h5>
+      </footer>
+    </div>
+  </div>
 </body>
-
-
-
-
 </html>

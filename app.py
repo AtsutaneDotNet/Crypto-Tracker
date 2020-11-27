@@ -33,9 +33,15 @@ def index():
             conn.row_factory = lambda cursor, row: row[0]
             c = conn.cursor()
             pnlData = c.execute('SELECT sum(pnl) FROM account1 WHERE rowid > 1').fetchall()
+            spnl = round(pnlData[0], 4)
             pnlAllData1 = c.execute('SELECT today FROM account1 WHERE rowid > 1').fetchall()
             percentData = c.execute('SELECT sum(daily) FROM account1 WHERE rowid > 1').fetchall()
+            spct = round(percentData[0], 4)
             percentAllData = c.execute('SELECT daily FROM account1 ').fetchall()
+            averagePNL = c.execute('SELECT avg(pnl) FROM account1 WHERE rowid > 1').fetchall()
+            averagePCT = c.execute('SELECT avg(daily) FROM account1 WHERE rowid > 1').fetchall()
+            apnl = round(averagePNL[0], 4)
+            apct = round(averagePCT[0], 4)
             dateData = c.execute('SELECT date FROM account1 WHERE rowid > 1')
             dates1 = c.fetchall()
             conn.commit()
@@ -49,6 +55,10 @@ def index():
             pnlAllData1  = [0,]
             dates1 = ['NO_DATA']
             values1 = [0,]
+            spnl = 0
+            spct = 0
+            apnl = 0
+            apct = 0
 
         if use_account2 == True:
             conn = sqlite3.connect('tracker.db')
@@ -68,9 +78,15 @@ def index():
             conn.row_factory = lambda cursor, row: row[0]
             c = conn.cursor()
             pnlData = c.execute('SELECT sum(pnl) FROM account2 WHERE rowid > 1').fetchall()
+            spnl2 = round(pnlData[0], 4)
             pnlAllData2 = c.execute('SELECT today FROM account2 WHERE rowid > 1').fetchall()
             percentData = c.execute('SELECT sum(daily) FROM account2 WHERE rowid > 1').fetchall()
+            spct2 = round(percentData[0], 4)
             percentAllData = c.execute('SELECT daily FROM account2').fetchall()
+            averagePNL = c.execute('SELECT avg(pnl) FROM account2 WHERE rowid > 1').fetchall()
+            averagePCT = c.execute('SELECT avg(daily) FROM account2 WHERE rowid > 1').fetchall()
+            apnl2 = round(averagePNL[0], 4)
+            apct2 = round(averagePCT[0], 4)
             dates2 = c.execute('SELECT date FROM account2 WHERE rowid > 1').fetchall()
             conn.commit()
             conn.close()
@@ -83,6 +99,10 @@ def index():
             pnlAllData2  = [0,]
             dates2 = ['NO_DATA']
             values2 = [0,]
+            spnl2 = 0
+            spct2 = 0
+            apnl2 = 0
+            apct2 = 0
 
         if use_account3 == True:
             conn = sqlite3.connect('tracker.db')
@@ -102,9 +122,15 @@ def index():
             conn.row_factory = lambda cursor, row: row[0]
             c = conn.cursor()
             pnlData = c.execute('SELECT sum(pnl) FROM account3 WHERE rowid > 1').fetchall()
+            spnl3 = round(pnlData[0], 4)
             pnlAllData3 = c.execute('SELECT today FROM account3 WHERE rowid > 1').fetchall()
             percentData = c.execute('SELECT sum(daily) FROM account3 WHERE rowid > 1').fetchall()
+            spct3 = round(percentData[0], 4)
             percentAllData = c.execute('SELECT daily FROM account3').fetchall()
+            averagePNL = c.execute('SELECT avg(pnl) FROM account3 WHERE rowid > 1').fetchall()
+            averagePCT = c.execute('SELECT avg(daily) FROM account3 WHERE rowid > 1').fetchall()
+            apnl3 = round(averagePNL[0], 4)
+            apct3 = round(averagePCT[0], 4)
             dates3 = c.execute('SELECT date FROM account3 WHERE rowid > 1').fetchall()
             conn.commit()
             conn.close()
@@ -117,6 +143,10 @@ def index():
             pnlAllData3  = [0,]
             dates3 = ['NO_DATA']
             values3 = [0,]
+            spnl3 = 0
+            spct3 = 0
+            apnl3 = 0
+            apct3 = 0
 
         if use_account4 == True:
             conn = sqlite3.connect('tracker.db')
@@ -136,9 +166,15 @@ def index():
             conn.row_factory = lambda cursor, row: row[0]
             c = conn.cursor()
             pnlData = c.execute('SELECT sum(pnl) FROM account4 WHERE rowid > 1').fetchall()
+            spnl4 = round(pnlData[0], 4)
             pnlAllData4 = c.execute('SELECT today FROM account4 WHERE rowid > 1').fetchall()
             percentData = c.execute('SELECT sum(daily) FROM account4 WHERE rowid > 1').fetchall()
+            spct4 = round(percentData[0], 4)
             percentAllData = c.execute('SELECT daily FROM account4').fetchall()
+            averagePNL = c.execute('SELECT avg(pnl) FROM account4 WHERE rowid > 1').fetchall()
+            averagePCT = c.execute('SELECT avg(daily) FROM account4 WHERE rowid > 1').fetchall()
+            apnl4 = round(averagePNL[0], 4)
+            apct4 = round(averagePCT[0], 4)
             dates4 = c.execute('SELECT date FROM account4 WHERE rowid > 1').fetchall()
             conn.commit()
             conn.close()
@@ -151,6 +187,10 @@ def index():
             pnlAllData4  = [0,]
             dates4 = ['NO_DATA']
             values4 = [0,]
+            spnl4 = 0
+            spct4 = 0
+            apnl4 = 0
+            apct4 = 0
 
         if use_account5 == True:
             conn = sqlite3.connect('tracker.db')
@@ -170,9 +210,15 @@ def index():
             conn.row_factory = lambda cursor, row: row[0]
             c = conn.cursor()
             pnlData = c.execute('SELECT sum(pnl) FROM account5 WHERE rowid > 1').fetchall()
+            spnl5 = round(pnlData[0], 4)
             pnlAllData5 = c.execute('SELECT today FROM account5 WHERE rowid > 1').fetchall()
             percentData = c.execute('SELECT sum(daily) FROM account5 WHERE rowid > 1').fetchall()
+            spct5 = round(percentData[0], 4)
             percentAllData = c.execute('SELECT daily FROM account5').fetchall()
+            averagePNL = c.execute('SELECT avg(pnl) FROM account5 WHERE rowid > 1').fetchall()
+            averagePCT = c.execute('SELECT avg(daily) FROM account5 WHERE rowid > 1').fetchall()
+            apnl5 = round(averagePNL[0], 4)
+            apct5 = round(averagePCT[0], 4)
             dates5 = c.execute('SELECT date FROM account5 WHERE rowid > 1').fetchall()
             conn.commit()
             conn.close()
@@ -184,6 +230,10 @@ def index():
             pnlAllData5  = [0,]
             dates5 = ['NO_DATA']
             values5 = [0,]
+            spnl5 = 0
+            spct5 = 0
+            apnl5 = 0
+            apct5 = 0
 
         if use_account6 == True:
             conn = sqlite3.connect('tracker.db')
@@ -203,9 +253,15 @@ def index():
             conn.row_factory = lambda cursor, row: row[0]
             c = conn.cursor()
             pnlData = c.execute('SELECT sum(pnl) FROM account6 WHERE rowid > 1').fetchall()
+            spnl6 = round(pnlData[0], 4)
             pnlAllData6 = c.execute('SELECT today FROM account6 WHERE rowid > 1').fetchall()
             percentData = c.execute('SELECT sum(daily) FROM account6 WHERE rowid > 1').fetchall()
+            spct6 = round(percentData[0], 4)
             percentAllData = c.execute('SELECT daily FROM account6').fetchall()
+            averagePNL = c.execute('SELECT avg(pnl) FROM account6 WHERE rowid > 1').fetchall()
+            averagePCT = c.execute('SELECT avg(daily) FROM account6 WHERE rowid > 1').fetchall()
+            apnl6 = round(averagePNL[0], 4)
+            apct6 = round(averagePCT[0], 4)
             dates6 = c.execute('SELECT date FROM account6 WHERE rowid > 1').fetchall()
             conn.commit()
             conn.close()
@@ -217,18 +273,22 @@ def index():
             pnlAllData6  = [0,]
             dates6 = ['NO_DATA']
             values6 = [0,]
+            spnl6 = 0
+            spct6 = 0
+            apnl6 = 0
+            apct6 = 0
 
 
 
         return render_template('index.html', today=today, pnl=pnl, daily=daily, nickname1=nickname1, today2=today2, pnl2=pnl2, daily2=daily2, nickname2=nickname2,today3=today3, pnl3=pnl3, daily3=daily3,
                                 nickname3=nickname3, today4=today4, pnl4=pnl4, daily4=daily4, nickname4=nickname4, today5=today5, pnl5=pnl5, daily5=daily5, nickname5=nickname5,
                                 today6=today6, pnl6=pnl6, daily6=daily6, nickname6=nickname6,
-                               max1=(pnlAllData1[-1] * 2), labels1=dates1, values1=pnlAllData1,
-                               max2=(pnlAllData2[-1] * 2), labels2=dates2, values2=pnlAllData2,
-                               max3=(pnlAllData3[-1] * 2), labels3=dates3, values3=pnlAllData3,
-                               max4=(pnlAllData4[-1] * 2), labels4=dates4, values4=pnlAllData4,
-                               max5=(pnlAllData5[-1] * 2), labels5=dates5, values5=pnlAllData5,
-                               max6=(pnlAllData6[-1] * 2), labels6=dates6, values6=pnlAllData6)
+                               max1=(pnlAllData1[-1] * 2), labels1=dates1, values1=pnlAllData1, allpnl=spnl, allpct=spct, avgpnl=apnl, avgpct=apct,
+                               max2=(pnlAllData2[-1] * 2), labels2=dates2, values2=pnlAllData2, allpnl2=spnl2, allpct2=spct2, avgpnl2=apnl2, avgpct2=apct2,
+                               max3=(pnlAllData3[-1] * 2), labels3=dates3, values3=pnlAllData3, allpnl3=spnl3, allpct3=spct3, avgpnl3=apnl3, avgpct3=apct3,
+                               max4=(pnlAllData4[-1] * 2), labels4=dates4, values4=pnlAllData4, allpnl4=spnl4, allpct4=spct4, avgpnl4=apnl4, avgpct4=apct4,
+                               max5=(pnlAllData5[-1] * 2), labels5=dates5, values5=pnlAllData5, allpnl5=spnl5, allpct5=spct5, avgpnl5=apnl5, avgpct5=apct5,
+                               max6=(pnlAllData6[-1] * 2), labels6=dates6, values6=pnlAllData6, allpnl6=spnl6, allpct6=spct6, avgpnl6=apnl6, avgpct6=apct6)
 
 
 

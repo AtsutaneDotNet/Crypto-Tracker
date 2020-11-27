@@ -25,12 +25,12 @@
     </div>
   </div>
   <div class="w3-row">
-    <div class="w3-card-4 w3-col s12 m6 l4 w3-margin">
+    <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
       <header class="w3-container w3-green">
         <h1>{{nickname1}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas id="chart" width="400" height="200"></canvas>
+        <canvas class="w3-padding-large" id="chart"></canvas>
         <script>
           // bar chart data
           var barData = {
@@ -69,6 +69,7 @@
           max = {{ max2 }}
           // draw bar chart
           var LineChartDemo = new Chart(mychart).Line(barData, {
+              responsive: true,
               scaleOverride: false,
               scaleSteps: steps,
               scaleStepWidth: Math.ceil(max / steps),
@@ -92,12 +93,12 @@
       </footer>
     </div>
 
-    <div class="w3-card-4 w3-col s12 m6 l4 w3-margin">
+    <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
       <header class="w3-container w3-green">
         <h1>{{nickname2}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas id="chart2" width="400" height="200"></canvas>
+        <canvas class="w3-padding-large" id="chart2"></canvas>
         <script>
           // bar chart data
           var barData = {
@@ -136,6 +137,7 @@
           max = {{ max2 }}
           // draw bar chart
           var LineChartDemo = new Chart(mychart).Line(barData, {
+              responsive: true,
               scaleOverride: false,
               scaleSteps: steps,
               scaleStepWidth: Math.ceil(max / steps),
@@ -159,12 +161,12 @@
       </footer>
     </div>
 
-    <div class="w3-card-4 w3-col s12 m6 l4 w3-margin">
+    <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
       <header class="w3-container w3-green">
         <h1>{{nickname3}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas id="chart3" width="400" height="200"></canvas>
+        <canvas class="w3-padding-large" id="chart3"></canvas>
         <script>
           // bar chart data
           var barData = {
@@ -203,6 +205,7 @@
           max = {{ max3 }}
           // draw bar chart
           var LineChartDemo = new Chart(mychart).Line(barData, {
+              responsive: true,
               scaleOverride: false,
               scaleSteps: steps,
               scaleStepWidth: Math.ceil(max / steps),
@@ -226,12 +229,12 @@
       </footer>
     </div>
 
-    <div class="w3-card-4 w3-col s12 m6 l4 w3-margin">
+    <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
       <header class="w3-container w3-green">
         <h1>{{nickname4}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas id="chart4" width="400" height="200"></canvas>
+        <canvas class="w3-padding-large" id="chart4"></canvas>
         <script>
           // bar chart data
           var barData = {
@@ -270,6 +273,7 @@
           max = {{ max4 }}
           // draw bar chart
           var LineChartDemo = new Chart(mychart).Line(barData, {
+              responsive: true,
               scaleOverride: false,
               scaleSteps: steps,
               scaleStepWidth: Math.ceil(max / steps),
@@ -293,12 +297,12 @@
       </footer>
     </div>
 
-    <div class="w3-card-4 w3-col s12 m6 l4 w3-margin">
+    <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
       <header class="w3-container w3-green">
         <h1>{{nickname5}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas id="chart5" width="400" height="200"></canvas>
+        <canvas class="w3-padding-large" id="chart5"></canvas>
         <script>
           // bar chart data
           var barData = {
@@ -337,6 +341,7 @@
           max = {{ max5 }}
           // draw bar chart
           var LineChartDemo = new Chart(mychart).Line(barData, {
+              responsive: true,
               scaleOverride: false,
               scaleSteps: steps,
               scaleStepWidth: Math.ceil(max / steps),
@@ -360,12 +365,12 @@
       </footer>
     </div>
 
-    <div class="w3-card-4 w3-col s12 m6 l4 w3-margin">
+    <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
       <header class="w3-container w3-green">
         <h1>{{nickname6}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas id="chart6" width="400" height="200"></canvas>
+        <canvas class="w3-padding-large" id="chart6"></canvas>
         <script>
           // bar chart data
           var barData = {
@@ -404,6 +409,7 @@
           max = {{ max6 }}
           // draw bar chart
           var LineChartDemo = new Chart(mychart).Line(barData, {
+              responsive: true,
               scaleOverride: false,
               scaleSteps: steps,
               scaleStepWidth: Math.ceil(max / steps),

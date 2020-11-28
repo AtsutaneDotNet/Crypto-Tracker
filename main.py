@@ -80,7 +80,7 @@ def binance(accountDB, key, secret, start, nickname):
                 pnl = data[2] - data[1]
                 daily = pnl/data[1] * 100
                 start = data[2]
-                overall = data[6] + daily
+                overall = data[5] + daily
         else:
             pnl = binanceBalance - start
             daily = pnl / start * 100
@@ -173,7 +173,7 @@ def bybit(accountDB, key, secret, start, nickname, asset):
                 pnl = round(data[2] - data[1], 6)
                 daily = round(pnl / data[1] * 100, 6)
                 start = data[2]
-                overall = data[6] + daily
+                overall = data[5] + daily
         else:
             pnl = round(balance - start, 6 )
             daily = round(pnl / start * 100, 6)
@@ -263,7 +263,7 @@ def ftx(accountDB, key, secret, start, nickname):
                 pnl = round(data[2] - data[1], 6)
                 daily = round(pnl / data[1] * 100, 6)
                 start = data[2]
-                overall = data[6] + daily
+                overall = data[5] + daily
         else:
             pnl = round(balance - start, 6)
             daily = round(pnl / start * 100, 6)

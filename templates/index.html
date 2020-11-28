@@ -11,7 +11,7 @@
     setTimeout("location.reload(true) ;",time) ;
     }
   </script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js'></script>
   <title>Crypto Tracker</title>
 </head>
 
@@ -30,56 +30,44 @@
         <h1>{{nickname1}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas style="padding-right:24px;" id="chart"></canvas>
+        <canvas id="chart"></canvas>
         <script>
-          // bar chart data
-          var barData = {
-            labels : [
-              {% for item in labels1 %}
-                "{{ item }}",
-              {% endfor %}
-            ],
-            datasets : [{
-            fillColor: "#008000",
-            strokeColor: "#FFFFFF",
-            pointColor: "#000000",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            bezierCurve : false,
-            data : [
-              {% for item in values1 %}
-                {{ item }},
-                {% endfor %}]
+            var lineChartData = {
+              labels : [
+                {% for item in labels1 %}
+                  "{{ item }}",
+                {% endfor %}
+              ],
+              datasets: [{
+                label: 'Cummulative PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values1 %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-1',
+              }]
+            };
+            var ctx = document.getElementById('chart').getContext('2d');
+            window.myLine = Chart.Line(ctx, {
+              data: lineChartData,
+              options: {
+                responsive: true,
+                hoverMode: 'index',
+                stacked: false,
+                scales: {
+                  yAxes: [{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'left',
+                    id: 'y-axis-1',
+                  }],
+                }
               }
-            ]
-          }
-          Chart.defaults.global.animationSteps = 50;
-          Chart.defaults.global.tooltipYPadding = 16;
-          Chart.defaults.global.tooltipCornerRadius = 0;
-          Chart.defaults.global.tooltipTitleFontStyle = "normal";
-          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-          Chart.defaults.global.animationEasing = "easeOutBounce";
-          Chart.defaults.global.responsive = false;
-          Chart.defaults.global.scaleLineColor = "white";
-          Chart.defaults.global.scaleFontSize = 12;
-          // get bar chart canvas
-          var mychart = document.getElementById("chart").getContext("2d");
-          steps = 10
-          max = {{ max2 }}
-          // draw bar chart
-          var LineChartDemo = new Chart(mychart).Line(barData, {
-              responsive: true,
-              scaleOverride: false,
-              scaleSteps: steps,
-              scaleStepWidth: Math.ceil(max / steps),
-              scaleStartValue: 0,
-              scaleShowVerticalLines: true,
-              scaleShowGridLines : true,
-              barShowStroke : false,
-              scaleShowLabels: true,
-              bezierCurve: false,
-          });
+            });
         </script>
       </div>
       <footer class="w3-container w3-green">
@@ -98,56 +86,44 @@
         <h1>{{nickname2}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas style="padding-right:24px;" id="chart2"></canvas>
+        <canvas id="chart2"></canvas>
         <script>
-          // bar chart data
-          var barData = {
-            labels : [
-              {% for item in labels2 %}
-                "{{ item }}",
-              {% endfor %}
-            ],
-            datasets : [{
-            fillColor: "#008000",
-            strokeColor: "#FFFFFF",
-            pointColor: "#000000",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            bezierCurve : false,
-            data : [
-              {% for item in values2 %}
-                {{ item }},
-                {% endfor %}]
+            var lineChartData = {
+              labels : [
+                {% for item in labels2 %}
+                  "{{ item }}",
+                {% endfor %}
+              ],
+              datasets: [{
+                label: 'Cummulative PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values2 %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-1',
+              }]
+            };
+            var ctx = document.getElementById('chart2').getContext('2d');
+            window.myLine = Chart.Line(ctx, {
+              data: lineChartData,
+              options: {
+                responsive: true,
+                hoverMode: 'index',
+                stacked: false,
+                scales: {
+                  yAxes: [{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'left',
+                    id: 'y-axis-1',
+                  }],
+                }
               }
-            ]
-          }
-          Chart.defaults.global.animationSteps = 50;
-          Chart.defaults.global.tooltipYPadding = 16;
-          Chart.defaults.global.tooltipCornerRadius = 0;
-          Chart.defaults.global.tooltipTitleFontStyle = "normal";
-          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-          Chart.defaults.global.animationEasing = "easeOutBounce";
-          Chart.defaults.global.responsive = false;
-          Chart.defaults.global.scaleLineColor = "white";
-          Chart.defaults.global.scaleFontSize = 12;
-          // get bar chart canvas
-          var mychart = document.getElementById("chart2").getContext("2d");
-          steps = 10
-          max = {{ max2 }}
-          // draw bar chart
-          var LineChartDemo = new Chart(mychart).Line(barData, {
-              responsive: true,
-              scaleOverride: false,
-              scaleSteps: steps,
-              scaleStepWidth: Math.ceil(max / steps),
-              scaleStartValue: 0,
-              scaleShowVerticalLines: true,
-              scaleShowGridLines : true,
-              barShowStroke : true,
-              scaleShowLabels: true,
-              bezierCurve: false,
-          });
+            });
         </script>
       </div>
       <footer class="w3-container w3-green">
@@ -166,56 +142,44 @@
         <h1>{{nickname3}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas style="padding-right:24px;" id="chart3"></canvas>
+        <canvas id="chart3"></canvas>
         <script>
-          // bar chart data
-          var barData = {
-            labels : [
-              {% for item in labels3 %}
-                "{{ item }}",
-              {% endfor %}
-            ],
-            datasets : [{
-            fillColor: "#008000",
-            strokeColor: "#FFFFFF",
-            pointColor: "#000000",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            bezierCurve : false,
-            data : [
-              {% for item in values3 %}
-                {{ item }},
-                {% endfor %}]
+            var lineChartData = {
+              labels : [
+                {% for item in labels3 %}
+                  "{{ item }}",
+                {% endfor %}
+              ],
+              datasets: [{
+                label: 'Cummulative PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values3 %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-1',
+              }]
+            };
+            var ctx = document.getElementById('chart3').getContext('2d');
+            window.myLine = Chart.Line(ctx, {
+              data: lineChartData,
+              options: {
+                responsive: true,
+                hoverMode: 'index',
+                stacked: false,
+                scales: {
+                  yAxes: [{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'left',
+                    id: 'y-axis-1',
+                  }],
+                }
               }
-            ]
-          }
-          Chart.defaults.global.animationSteps = 50;
-          Chart.defaults.global.tooltipYPadding = 16;
-          Chart.defaults.global.tooltipCornerRadius = 0;
-          Chart.defaults.global.tooltipTitleFontStyle = "normal";
-          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-          Chart.defaults.global.animationEasing = "easeOutBounce";
-          Chart.defaults.global.responsive = false;
-          Chart.defaults.global.scaleLineColor = "white";
-          Chart.defaults.global.scaleFontSize = 12;
-          // get bar chart canvas
-          var mychart = document.getElementById("chart3").getContext("2d");
-          steps = 10
-          max = {{ max3 }}
-          // draw bar chart
-          var LineChartDemo = new Chart(mychart).Line(barData, {
-              responsive: true,
-              scaleOverride: false,
-              scaleSteps: steps,
-              scaleStepWidth: Math.ceil(max / steps),
-              scaleStartValue: 0,
-              scaleShowVerticalLines: true,
-              scaleShowGridLines : true,
-              barShowStroke : true,
-              scaleShowLabels: true,
-              bezierCurve: false,
-          });
+            });
         </script>
       </div>
       <footer class="w3-container w3-green">
@@ -234,56 +198,44 @@
         <h1>{{nickname4}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas style="padding-right:24px;" id="chart4"></canvas>
+        <canvas id="chart4"></canvas>
         <script>
-          // bar chart data
-          var barData = {
-            labels : [
-              {% for item in labels4 %}
-                "{{ item }}",
-              {% endfor %}
-            ],
-            datasets : [{
-            fillColor: "#008000",
-            strokeColor: "#FFFFFF",
-            pointColor: "#000000",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            bezierCurve : false,
-            data : [
-              {% for item in values4 %}
-                {{ item }},
-                {% endfor %}]
+            var lineChartData = {
+              labels : [
+                {% for item in labels4 %}
+                  "{{ item }}",
+                {% endfor %}
+              ],
+              datasets: [{
+                label: 'Cummulative PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values4 %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-1',
+              }]
+            };
+            var ctx = document.getElementById('chart4').getContext('2d');
+            window.myLine = Chart.Line(ctx, {
+              data: lineChartData,
+              options: {
+                responsive: true,
+                hoverMode: 'index',
+                stacked: false,
+                scales: {
+                  yAxes: [{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'left',
+                    id: 'y-axis-1',
+                  }],
+                }
               }
-            ]
-          }
-          Chart.defaults.global.animationSteps = 50;
-          Chart.defaults.global.tooltipYPadding = 16;
-          Chart.defaults.global.tooltipCornerRadius = 0;
-          Chart.defaults.global.tooltipTitleFontStyle = "normal";
-          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-          Chart.defaults.global.animationEasing = "easeOutBounce";
-          Chart.defaults.global.responsive = false;
-          Chart.defaults.global.scaleLineColor = "white";
-          Chart.defaults.global.scaleFontSize = 12;
-          // get bar chart canvas
-          var mychart = document.getElementById("chart4").getContext("2d");
-          steps = 10
-          max = {{ max4 }}
-          // draw bar chart
-          var LineChartDemo = new Chart(mychart).Line(barData, {
-              responsive: true,
-              scaleOverride: false,
-              scaleSteps: steps,
-              scaleStepWidth: Math.ceil(max / steps),
-              scaleStartValue: 0,
-              scaleShowVerticalLines: true,
-              scaleShowGridLines : true,
-              barShowStroke : true,
-              scaleShowLabels: true,
-              bezierCurve: false,
-          });
+            });
         </script>
       </div>
       <footer class="w3-container w3-green">
@@ -302,56 +254,44 @@
         <h1>{{nickname5}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas style="padding-right:24px;" id="chart5"></canvas>
+        <canvas id="chart5"></canvas>
         <script>
-          // bar chart data
-          var barData = {
-            labels : [
-              {% for item in labels5 %}
-                "{{ item }}",
-              {% endfor %}
-            ],
-            datasets : [{
-            fillColor: "#008000",
-            strokeColor: "#FFFFFF",
-            pointColor: "#000000",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            bezierCurve : false,
-            data : [
-              {% for item in values5 %}
-                {{ item }},
-                {% endfor %}]
+            var lineChartData = {
+              labels : [
+                {% for item in labels5 %}
+                  "{{ item }}",
+                {% endfor %}
+              ],
+              datasets: [{
+                label: 'Cummulative PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values5 %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-1',
+              }]
+            };
+            var ctx = document.getElementById('chart5').getContext('2d');
+            window.myLine = Chart.Line(ctx, {
+              data: lineChartData,
+              options: {
+                responsive: true,
+                hoverMode: 'index',
+                stacked: false,
+                scales: {
+                  yAxes: [{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'left',
+                    id: 'y-axis-1',
+                  }],
+                }
               }
-            ]
-          }
-          Chart.defaults.global.animationSteps = 50;
-          Chart.defaults.global.tooltipYPadding = 16;
-          Chart.defaults.global.tooltipCornerRadius = 0;
-          Chart.defaults.global.tooltipTitleFontStyle = "normal";
-          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-          Chart.defaults.global.animationEasing = "easeOutBounce";
-          Chart.defaults.global.responsive = false;
-          Chart.defaults.global.scaleLineColor = "white";
-          Chart.defaults.global.scaleFontSize = 12;
-          // get bar chart canvas
-          var mychart = document.getElementById("chart5").getContext("2d");
-          steps = 10
-          max = {{ max5 }}
-          // draw bar chart
-          var LineChartDemo = new Chart(mychart).Line(barData, {
-              responsive: true,
-              scaleOverride: false,
-              scaleSteps: steps,
-              scaleStepWidth: Math.ceil(max / steps),
-              scaleStartValue: 0,
-              scaleShowVerticalLines: true,
-              scaleShowGridLines : true,
-              barShowStroke : true,
-              scaleShowLabels: true,
-              bezierCurve: false,
-          });
+            });
         </script>
       </div>
       <footer class="w3-container w3-green">
@@ -370,56 +310,44 @@
         <h1>{{nickname6}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
-        <canvas style="padding-right:24px;" id="chart6"></canvas>
+        <canvas id="chart6"></canvas>
         <script>
-          // bar chart data
-          var barData = {
-            labels : [
-              {% for item in labels6 %}
-                "{{ item }}",
-              {% endfor %}
-            ],
-            datasets : [{
-            fillColor: "#008000",
-            strokeColor: "#FFFFFF",
-            pointColor: "#000000",
-            pointStrokeColor: "#fff",
-            pointHighlightFill: "#fff",
-            pointHighlightStroke: "rgba(151,187,205,1)",
-            bezierCurve : false,
-            data : [
-              {% for item in values6 %}
-                {{ item }},
-                {% endfor %}]
+            var lineChartData = {
+              labels : [
+                {% for item in labels6 %}
+                  "{{ item }}",
+                {% endfor %}
+              ],
+              datasets: [{
+                label: 'Cummulative PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values6 %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-1',
+              }]
+            };
+            var ctx = document.getElementById('chart6').getContext('2d');
+            window.myLine = Chart.Line(ctx, {
+              data: lineChartData,
+              options: {
+                responsive: true,
+                hoverMode: 'index',
+                stacked: false,
+                scales: {
+                  yAxes: [{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'left',
+                    id: 'y-axis-1',
+                  }],
+                }
               }
-            ]
-          }
-          Chart.defaults.global.animationSteps = 50;
-          Chart.defaults.global.tooltipYPadding = 16;
-          Chart.defaults.global.tooltipCornerRadius = 0;
-          Chart.defaults.global.tooltipTitleFontStyle = "normal";
-          Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
-          Chart.defaults.global.animationEasing = "easeOutBounce";
-          Chart.defaults.global.responsive = false;
-          Chart.defaults.global.scaleLineColor = "white";
-          Chart.defaults.global.scaleFontSize = 12;
-          // get bar chart canvas
-          var mychart = document.getElementById("chart6").getContext("2d");
-          steps = 10
-          max = {{ max6 }}
-          // draw bar chart
-          var LineChartDemo = new Chart(mychart).Line(barData, {
-              responsive: true,
-              scaleOverride: false,
-              scaleSteps: steps,
-              scaleStepWidth: Math.ceil(max / steps),
-              scaleStartValue: 0,
-              scaleShowVerticalLines: true,
-              scaleShowGridLines : true,
-              barShowStroke : true,
-              scaleShowLabels: true,
-              bezierCurve: false,
-          });
+            });
         </script>
       </div>
       <footer class="w3-container w3-green">

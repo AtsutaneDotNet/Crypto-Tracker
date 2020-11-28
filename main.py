@@ -102,7 +102,7 @@ def binance(accountDB, key, secret, start, nickname):
         start = data[2]
         pnl = binanceBalance - start
         daily = pnl/start * 100
-        overall = daily
+        overall = data[5] + daily
         c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
                   (today, start, binanceBalance, pnl, daily, overall, nickname))
 
@@ -195,7 +195,7 @@ def bybit(accountDB, key, secret, start, nickname, asset):
         start = data[2]
         pnl = balance - start
         daily = pnl / start * 100
-        overall = daily
+        overall = data[5] + daily
         c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
                   (today, start, balance, pnl, daily, overall, nickname))
 
@@ -285,7 +285,7 @@ def ftx(accountDB, key, secret, start, nickname):
         start = data[2]
         pnl = balance - start
         daily = pnl / start * 100
-        overall = daily
+        overall = data[5] + daily
         c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
                   (today, start, balance, pnl, daily, overall, nickname))
 

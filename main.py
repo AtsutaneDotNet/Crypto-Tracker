@@ -10,10 +10,10 @@ def create(accountDB, start):
     print("DB does not Exist Yet, Creating Now")
     conn = sqlite3.connect('tracker.db')
     c = conn.cursor()
-    c.execute('CREATE TABLE ' + accountDB + ' (date text, start integer, today integer, pnl integer, daily integer, nickname text)')
+    c.execute('CREATE TABLE ' + accountDB + ' (date text, start integer, today integer, pnl integer, daily integer, overall integer, nickname text)')
     conn.commit()
-    c.execute('INSERT INTO ' + accountDB + '  VALUES (?, ?, ? , ?, ?, ?)',
-              ('start', start, 0, 0, 0, 0))
+    c.execute('INSERT INTO ' + accountDB + '  VALUES (?, ?, ? , ?, ?, ?, ?)',
+              ('start', start, 0, 0, 0, 0, 0))
     conn.commit()
     conn.close()
 
@@ -55,6 +55,7 @@ def binance(accountDB, key, secret, start, nickname):
     yesterday = str(yesterdayCalc)
     pnl = 0
     daily = 0
+    overall = 0
 
     #read Current Data in DB
     conn = sqlite3.connect('tracker.db')
@@ -79,9 +80,11 @@ def binance(accountDB, key, secret, start, nickname):
                 pnl = data[2] - data[1]
                 daily = pnl/data[1] * 100
                 start = data[2]
+                overall = data[6] + daily
         else:
             pnl = binanceBalance - start
             daily = pnl / start * 100
+            overall = daily
 
     except OperationalError:
         print("Error in Line")
@@ -99,8 +102,9 @@ def binance(accountDB, key, secret, start, nickname):
         start = data[2]
         pnl = binanceBalance - start
         daily = pnl/start * 100
-        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?)',
-                  (today, start, binanceBalance, pnl, daily, nickname))
+        overall = daily
+        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
+                  (today, start, binanceBalance, pnl, daily, overall, nickname))
 
         conn.commit()
         conn.close()
@@ -115,8 +119,9 @@ def binance(accountDB, key, secret, start, nickname):
         start = start
         pnl = binanceBalance - start
         daily = pnl/start * 100
-        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?)',
-                  (today, start, binanceBalance, pnl, daily, nickname))
+        overall = daily
+        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
+                  (today, start, binanceBalance, pnl, daily, overall, nickname))
 
         conn.commit()
         conn.close()
@@ -168,9 +173,11 @@ def bybit(accountDB, key, secret, start, nickname, asset):
                 pnl = round(data[2] - data[1], 6)
                 daily = round(pnl / data[1] * 100, 6)
                 start = data[2]
+                overall = data[6] + daily
         else:
             pnl = round(balance - start, 6 )
             daily = round(pnl / start * 100, 6)
+            overall = daily
 
     except OperationalError:
         #print("Error in Line")
@@ -188,8 +195,9 @@ def bybit(accountDB, key, secret, start, nickname, asset):
         start = data[2]
         pnl = balance - start
         daily = pnl / start * 100
-        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?)',
-                  (today, start, balance, pnl, daily, nickname))
+        overall = daily
+        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
+                  (today, start, balance, pnl, daily, overall, nickname))
 
         conn.commit()
         conn.close()
@@ -204,8 +212,9 @@ def bybit(accountDB, key, secret, start, nickname, asset):
         start = start
         pnl = round(balance - start, 6)
         daily = round(pnl / start * 100, 6)
-        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?)',
-                  (today, start, balance, pnl, daily, nickname))
+        overall = daily
+        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
+                  (today, start, balance, pnl, daily, overall, nickname))
 
         conn.commit()
         conn.close()
@@ -254,9 +263,11 @@ def ftx(accountDB, key, secret, start, nickname):
                 pnl = round(data[2] - data[1], 6)
                 daily = round(pnl / data[1] * 100, 6)
                 start = data[2]
+                overall = data[6] + daily
         else:
             pnl = round(balance - start, 6)
             daily = round(pnl / start * 100, 6)
+            overall = daily
 
     except OperationalError:
         print("Error in Line")
@@ -274,8 +285,9 @@ def ftx(accountDB, key, secret, start, nickname):
         start = data[2]
         pnl = balance - start
         daily = pnl / start * 100
-        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?)',
-                  (today, start, balance, pnl, daily, nickname))
+        overall = daily
+        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
+                  (today, start, balance, pnl, daily, overall, nickname))
 
         conn.commit()
         conn.close()
@@ -290,8 +302,9 @@ def ftx(accountDB, key, secret, start, nickname):
         start = start
         pnl = round(balance - start, 6)
         daily = round(pnl / start * 100, 6)
-        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?)',
-                  (today, start, balance, pnl, daily, nickname))
+        overall = daily
+        c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
+                  (today, start, balance, pnl, daily, overall, nickname))
 
         conn.commit()
         conn.close()

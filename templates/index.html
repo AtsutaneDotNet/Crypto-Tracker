@@ -26,8 +26,8 @@
   </div>
   <div class="w3-row">
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
-      <header class="w3-container w3-green">
-        <h1>{{nickname1}}</h1>
+      <header class="w3-container w3-green w3-center">
+        <h1 class="w3-wide">{{nickname1}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
         <canvas id="chart"></canvas>
@@ -39,9 +39,10 @@
                 {% endfor %}
               ],
               datasets: [{
+                type: 'line',
                 label: 'Cummulative PNL',
-                borderColor: 'rgb(0, 128, 0)',
-                backgroundColor: 'rgb(0, 128, 0)',
+                borderColor: 'rgb(255, 0, 0)',
+                backgroundColor: 'rgb(255, 0, 0)',
                 fill: false,
                 data : [
                   {% for item in values1 %}
@@ -49,41 +50,84 @@
                   {% endfor %}
                 ],
                 yAxisID: 'y-axis-1',
+              },{
+                type: 'line',
+                label: 'Cummulative PNL %',
+                borderColor: 'rgb(0, 0, 255)',
+                backgroundColor: 'rgb(0, 0, 255)',
+                fill: false,
+                data : [
+                  {% for item in values1a %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-2',
+              },{
+                type: 'bar',
+                label: 'Daily PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values1b %}
+                    {{ item }},
+                  {% endfor %}
+                ],
               }]
             };
             var ctx = document.getElementById('chart').getContext('2d');
             window.myLine = Chart.Line(ctx, {
+              type: 'bar',
               data: lineChartData,
               options: {
                 responsive: true,
                 hoverMode: 'index',
                 stacked: false,
+                tooltips: {
+					        mode: 'index'
+				        },
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
                     display: true,
                     position: 'left',
                     id: 'y-axis-1',
+                  },{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'right',
+                    id: 'y-axis-2',
                   }],
                 }
               }
             });
         </script>
       </div>
-      <footer class="w3-container w3-green">
-        <h5>Balance : ${{today}}</h5>
-        <h5 class="w3-half">Today's PNL : ${{pnl}}</h5>
-        <h5 class="w3-half">Today's % : {{daily}}%</h5>
-        <h5 class="w3-half">Overall's PNL : ${{allpnl}}</h5>
-        <h5 class="w3-half">Overall's % : {{allpct}}%</h5>
-        <h5 class="w3-half">Average's PNL : ${{avgpnl}}</h5>
-        <h5 class="w3-half">Average's % : {{avgpct}}%</h5>
+      <footer class="w3-container w3-green w3-wide">
+        <h6 class="w3-center">Account Analysis</h6>
+        <div class="w3-half">Start Balance</div>
+        <div class="w3-half w3-right-align">${{start}}</div>
+        <div class="w3-half">Current Balance</div>
+        <div class="w3-half w3-right-align">${{today}}</div>
+        <div class="w3-half">Today Profit</div>
+        <div class="w3-half w3-right-align">${{pnl}}</div>
+        <div class="w3-half">Today Profit %</div>
+        <div class="w3-half w3-right-align">{{daily}}%</div>
+        <div class="w3-half">Average Profit</div>
+        <div class="w3-half w3-right-align">${{avgpnl}}</div>
+        <div class="w3-half">Average Profit %</div>
+        <div class="w3-half w3-right-align">{{avgpct}}%</div>
+        <div class="w3-half">Total Profit</div>
+        <div class="w3-half w3-right-align">${{allpnl}}</div>
+        <div class="w3-half">Total Profit %</div>
+        <div class="w3-half w3-right-align">{{allpct}}%</div>
+        <div>&nbsp;</div>
       </footer>
     </div>
 
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
-      <header class="w3-container w3-green">
-        <h1>{{nickname2}}</h1>
+      <header class="w3-container w3-green w3-center">
+        <h1 class="w3-wide">{{nickname2}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
         <canvas id="chart2"></canvas>
@@ -95,9 +139,10 @@
                 {% endfor %}
               ],
               datasets: [{
+                type: 'line',
                 label: 'Cummulative PNL',
-                borderColor: 'rgb(0, 128, 0)',
-                backgroundColor: 'rgb(0, 128, 0)',
+                borderColor: 'rgb(255, 0, 0)',
+                backgroundColor: 'rgb(255, 0, 0)',
                 fill: false,
                 data : [
                   {% for item in values2 %}
@@ -105,41 +150,84 @@
                   {% endfor %}
                 ],
                 yAxisID: 'y-axis-1',
+              },{
+                type: 'line',
+                label: 'Cummulative PNL %',
+                borderColor: 'rgb(0, 0, 255)',
+                backgroundColor: 'rgb(0, 0, 255)',
+                fill: false,
+                data : [
+                  {% for item in values2a %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-2',
+              },{
+                type: 'bar',
+                label: 'Daily PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values2b %}
+                    {{ item }},
+                  {% endfor %}
+                ],
               }]
             };
             var ctx = document.getElementById('chart2').getContext('2d');
             window.myLine = Chart.Line(ctx, {
+              type: 'bar',
               data: lineChartData,
               options: {
                 responsive: true,
                 hoverMode: 'index',
                 stacked: false,
+                tooltips: {
+					        mode: 'index'
+				        },
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
                     display: true,
                     position: 'left',
                     id: 'y-axis-1',
+                  },{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'right',
+                    id: 'y-axis-2',
                   }],
                 }
               }
             });
         </script>
       </div>
-      <footer class="w3-container w3-green">
-        <h5>Balance : ${{today2}}</h5>
-        <h5 class="w3-half">Today's PNL : ${{pnl2}}</h5>
-        <h5 class="w3-half">Today's % : {{daily2}}%</h5>
-        <h5 class="w3-half">Overall's PNL : ${{allpnl2}}</h5>
-        <h5 class="w3-half">Overall's % : {{allpct2}}%</h5>
-        <h5 class="w3-half">Average's PNL : ${{avgpnl2}}</h5>
-        <h5 class="w3-half">Average's % : {{avgpct2}}%</h5>
+      <footer class="w3-container w3-green w3-wide">
+        <h6 class="w3-center">Account Analysis</h6>
+        <div class="w3-half">Start Balance</div>
+        <div class="w3-half w3-right-align">${{start2}}</div>
+        <div class="w3-half">Current Balance</div>
+        <div class="w3-half w3-right-align">${{today2}}</div>
+        <div class="w3-half">Today Profit</div>
+        <div class="w3-half w3-right-align">${{pnl2}}</div>
+        <div class="w3-half">Today Profit %</div>
+        <div class="w3-half w3-right-align">{{daily2}}%</div>
+        <div class="w3-half">Average Profit</div>
+        <div class="w3-half w3-right-align">${{avgpnl2}}</div>
+        <div class="w3-half">Average Profit %</div>
+        <div class="w3-half w3-right-align">{{avgpct2}}%</div>
+        <div class="w3-half">Total Profit</div>
+        <div class="w3-half w3-right-align">${{allpnl2}}</div>
+        <div class="w3-half">Total Profit %</div>
+        <div class="w3-half w3-right-align">{{allpct2}}%</div>
+        <div>&nbsp;</div>
       </footer>
     </div>
 
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
-      <header class="w3-container w3-green">
-        <h1>{{nickname3}}</h1>
+      <header class="w3-container w3-green w3-center">
+        <h1 class="w3-wide">{{nickname3}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
         <canvas id="chart3"></canvas>
@@ -151,9 +239,10 @@
                 {% endfor %}
               ],
               datasets: [{
+                type: 'line',
                 label: 'Cummulative PNL',
-                borderColor: 'rgb(0, 128, 0)',
-                backgroundColor: 'rgb(0, 128, 0)',
+                borderColor: 'rgb(255, 0, 0)',
+                backgroundColor: 'rgb(255, 0, 0)',
                 fill: false,
                 data : [
                   {% for item in values3 %}
@@ -161,41 +250,84 @@
                   {% endfor %}
                 ],
                 yAxisID: 'y-axis-1',
+              },{
+                type: 'line',
+                label: 'Cummulative PNL %',
+                borderColor: 'rgb(0, 0, 255)',
+                backgroundColor: 'rgb(0, 0, 255)',
+                fill: false,
+                data : [
+                  {% for item in values3a %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-2',
+              },{
+                type: 'bar',
+                label: 'Daily PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values3b %}
+                    {{ item }},
+                  {% endfor %}
+                ],
               }]
             };
             var ctx = document.getElementById('chart3').getContext('2d');
             window.myLine = Chart.Line(ctx, {
+              type: 'bar',
               data: lineChartData,
               options: {
                 responsive: true,
                 hoverMode: 'index',
                 stacked: false,
+                tooltips: {
+					        mode: 'index'
+				        },
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
                     display: true,
                     position: 'left',
                     id: 'y-axis-1',
+                  },{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'right',
+                    id: 'y-axis-2',
                   }],
                 }
               }
             });
         </script>
       </div>
-      <footer class="w3-container w3-green">
-        <h5>Balance : ${{today3}}</h5>
-        <h5 class="w3-half">Today's PNL : ${{pnl3}}</h5>
-        <h5 class="w3-half">Today's % : {{daily3}}%</h5>
-        <h5 class="w3-half">Overall's PNL : ${{allpnl3}}</h5>
-        <h5 class="w3-half">Overall's % : {{allpct3}}%</h5>
-        <h5 class="w3-half">Average's PNL : ${{avgpnl3}}</h5>
-        <h5 class="w3-half">Average's % : {{avgpct3}}%</h5>
+      <footer class="w3-container w3-green w3-wide">
+        <h6 class="w3-center">Account Analysis</h6>
+        <div class="w3-half">Start Balance</div>
+        <div class="w3-half w3-right-align">${{start3}}</div>
+        <div class="w3-half">Current Balance</div>
+        <div class="w3-half w3-right-align">${{today3}}</div>
+        <div class="w3-half">Today Profit</div>
+        <div class="w3-half w3-right-align">${{pnl3}}</div>
+        <div class="w3-half">Today Profit %</div>
+        <div class="w3-half w3-right-align">{{daily3}}%</div>
+        <div class="w3-half">Average Profit</div>
+        <div class="w3-half w3-right-align">${{avgpnl3}}</div>
+        <div class="w3-half">Average Profit %</div>
+        <div class="w3-half w3-right-align">{{avgpct3}}%</div>
+        <div class="w3-half">Total Profit</div>
+        <div class="w3-half w3-right-align">${{allpnl3}}</div>
+        <div class="w3-half">Total Profit %</div>
+        <div class="w3-half w3-right-align">{{allpct3}}%</div>
+        <div>&nbsp;</div>
       </footer>
     </div>
 
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
-      <header class="w3-container w3-green">
-        <h1>{{nickname4}}</h1>
+      <header class="w3-container w3-green w3-center">
+        <h1 class="w3-wide">{{nickname4}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
         <canvas id="chart4"></canvas>
@@ -207,9 +339,10 @@
                 {% endfor %}
               ],
               datasets: [{
+                type: 'line',
                 label: 'Cummulative PNL',
-                borderColor: 'rgb(0, 128, 0)',
-                backgroundColor: 'rgb(0, 128, 0)',
+                borderColor: 'rgb(255, 0, 0)',
+                backgroundColor: 'rgb(255, 0, 0)',
                 fill: false,
                 data : [
                   {% for item in values4 %}
@@ -217,41 +350,84 @@
                   {% endfor %}
                 ],
                 yAxisID: 'y-axis-1',
+              },{
+                type: 'line',
+                label: 'Cummulative PNL %',
+                borderColor: 'rgb(0, 0, 255)',
+                backgroundColor: 'rgb(0, 0, 255)',
+                fill: false,
+                data : [
+                  {% for item in values4a %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-2',
+              },{
+                type: 'bar',
+                label: 'Daily PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values4b %}
+                    {{ item }},
+                  {% endfor %}
+                ],
               }]
             };
             var ctx = document.getElementById('chart4').getContext('2d');
             window.myLine = Chart.Line(ctx, {
+              type: 'bar',
               data: lineChartData,
               options: {
                 responsive: true,
                 hoverMode: 'index',
                 stacked: false,
+                tooltips: {
+					        mode: 'index'
+				        },
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
                     display: true,
                     position: 'left',
                     id: 'y-axis-1',
+                  },{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'right',
+                    id: 'y-axis-2',
                   }],
                 }
               }
             });
         </script>
       </div>
-      <footer class="w3-container w3-green">
-        <h5>Balance : ${{today4}}</h5>
-        <h5 class="w3-half">Today's PNL : ${{pnl4}}</h5>
-        <h5 class="w3-half">Today's % : {{daily4}}%</h5>
-        <h5 class="w3-half">Overall's PNL : ${{allpnl4}}</h5>
-        <h5 class="w3-half">Overall's % : {{allpct4}}%</h5>
-        <h5 class="w3-half">Average's PNL : ${{avgpnl4}}</h5>
-        <h5 class="w3-half">Average's % : {{avgpct4}}%</h5>
+      <footer class="w3-container w3-green w3-wide">
+        <h6 class="w3-center">Account Analysis</h6>
+        <div class="w3-half">Start Balance</div>
+        <div class="w3-half w3-right-align">${{start4}}</div>
+        <div class="w3-half">Current Balance</div>
+        <div class="w3-half w3-right-align">${{today4}}</div>
+        <div class="w3-half">Today Profit</div>
+        <div class="w3-half w3-right-align">${{pnl4}}</div>
+        <div class="w3-half">Today Profit %</div>
+        <div class="w3-half w3-right-align">{{daily4}}%</div>
+        <div class="w3-half">Average Profit</div>
+        <div class="w3-half w3-right-align">${{avgpnl4}}</div>
+        <div class="w3-half">Average Profit %</div>
+        <div class="w3-half w3-right-align">{{avgpct4}}%</div>
+        <div class="w3-half">Total Profit</div>
+        <div class="w3-half w3-right-align">${{allpnl4}}</div>
+        <div class="w3-half">Total Profit %</div>
+        <div class="w3-half w3-right-align">{{allpct4}}%</div>
+        <div>&nbsp;</div>
       </footer>
     </div>
 
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
-      <header class="w3-container w3-green">
-        <h1>{{nickname5}}</h1>
+      <header class="w3-container w3-green w3-center">
+        <h1 class="w3-wide">{{nickname5}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
         <canvas id="chart5"></canvas>
@@ -263,9 +439,10 @@
                 {% endfor %}
               ],
               datasets: [{
+                type: 'line',
                 label: 'Cummulative PNL',
-                borderColor: 'rgb(0, 128, 0)',
-                backgroundColor: 'rgb(0, 128, 0)',
+                borderColor: 'rgb(255, 0, 0)',
+                backgroundColor: 'rgb(255, 0, 0)',
                 fill: false,
                 data : [
                   {% for item in values5 %}
@@ -273,41 +450,84 @@
                   {% endfor %}
                 ],
                 yAxisID: 'y-axis-1',
+              },{
+                type: 'line',
+                label: 'Cummulative PNL %',
+                borderColor: 'rgb(0, 0, 255)',
+                backgroundColor: 'rgb(0, 0, 255)',
+                fill: false,
+                data : [
+                  {% for item in values5a %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-2',
+              },{
+                type: 'bar',
+                label: 'Daily PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values5b %}
+                    {{ item }},
+                  {% endfor %}
+                ],
               }]
             };
             var ctx = document.getElementById('chart5').getContext('2d');
             window.myLine = Chart.Line(ctx, {
+              type: 'bar',
               data: lineChartData,
               options: {
                 responsive: true,
                 hoverMode: 'index',
                 stacked: false,
+                tooltips: {
+					        mode: 'index'
+				        },
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
                     display: true,
                     position: 'left',
                     id: 'y-axis-1',
+                  },{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'right',
+                    id: 'y-axis-2',
                   }],
                 }
               }
             });
         </script>
       </div>
-      <footer class="w3-container w3-green">
-        <h5>Balance : ${{today5}}</h5>
-        <h5 class="w3-half">Today's PNL : ${{pnl5}}</h5>
-        <h5 class="w3-half">Today's % : {{daily5}}%</h5>
-        <h5 class="w3-half">Overall's PNL : ${{allpnl5}}</h5>
-        <h5 class="w3-half">Overall's % : {{allpct5}}%</h5>
-        <h5 class="w3-half">Average's PNL : ${{avgpnl5}}</h5>
-        <h5 class="w3-half">Average's % : {{avgpct5}}%</h5>
+      <footer class="w3-container w3-green w3-wide">
+        <h6 class="w3-center">Account Analysis</h6>
+        <div class="w3-half">Start Balance</div>
+        <div class="w3-half w3-right-align">${{start5}}</div>
+        <div class="w3-half">Current Balance</div>
+        <div class="w3-half w3-right-align">${{today5}}</div>
+        <div class="w3-half">Today Profit</div>
+        <div class="w3-half w3-right-align">${{pnl5}}</div>
+        <div class="w3-half">Today Profit %</div>
+        <div class="w3-half w3-right-align">{{daily5}}%</div>
+        <div class="w3-half">Average Profit</div>
+        <div class="w3-half w3-right-align">${{avgpnl5}}</div>
+        <div class="w3-half">Average Profit %</div>
+        <div class="w3-half w3-right-align">{{avgpct5}}%</div>
+        <div class="w3-half">Total Profit</div>
+        <div class="w3-half w3-right-align">${{allpnl5}}</div>
+        <div class="w3-half">Total Profit %</div>
+        <div class="w3-half w3-right-align">{{allpct5}}%</div>
+        <div>&nbsp;</div>
       </footer>
     </div>
 
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin">
-      <header class="w3-container w3-green">
-        <h1>{{nickname6}}</h1>
+      <header class="w3-container w3-green w3-center">
+        <h1 class="w3-wide">{{nickname6}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
         <canvas id="chart6"></canvas>
@@ -319,9 +539,10 @@
                 {% endfor %}
               ],
               datasets: [{
+                type: 'line',
                 label: 'Cummulative PNL',
-                borderColor: 'rgb(0, 128, 0)',
-                backgroundColor: 'rgb(0, 128, 0)',
+                borderColor: 'rgb(255, 0, 0)',
+                backgroundColor: 'rgb(255, 0, 0)',
                 fill: false,
                 data : [
                   {% for item in values6 %}
@@ -329,35 +550,78 @@
                   {% endfor %}
                 ],
                 yAxisID: 'y-axis-1',
+              },{
+                type: 'line',
+                label: 'Cummulative PNL %',
+                borderColor: 'rgb(0, 0, 255)',
+                backgroundColor: 'rgb(0, 0, 255)',
+                fill: false,
+                data : [
+                  {% for item in values6a %}
+                    {{ item }},
+                  {% endfor %}
+                ],
+                yAxisID: 'y-axis-2',
+              },{
+                type: 'bar',
+                label: 'Daily PNL',
+                borderColor: 'rgb(0, 128, 0)',
+                backgroundColor: 'rgb(0, 128, 0)',
+                fill: false,
+                data : [
+                  {% for item in values6b %}
+                    {{ item }},
+                  {% endfor %}
+                ],
               }]
             };
             var ctx = document.getElementById('chart6').getContext('2d');
             window.myLine = Chart.Line(ctx, {
+              type: 'bar',
               data: lineChartData,
               options: {
                 responsive: true,
                 hoverMode: 'index',
                 stacked: false,
+                tooltips: {
+					        mode: 'index'
+				        },
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
                     display: true,
                     position: 'left',
                     id: 'y-axis-1',
+                  },{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'right',
+                    id: 'y-axis-2',
                   }],
                 }
               }
             });
         </script>
       </div>
-      <footer class="w3-container w3-green">
-        <h5>Balance : ${{today6}}</h5>
-        <h5 class="w3-half">Today's PNL : ${{pnl6}}</h5>
-        <h5 class="w3-half">Today's % : {{daily6}}%</h5>
-        <h5 class="w3-half">Overall's PNL : ${{allpnl6}}</h5>
-        <h5 class="w3-half">Overall's % : {{allpct6}}%</h5>
-        <h5 class="w3-half">Average's PNL : ${{avgpnl6}}</h5>
-        <h5 class="w3-half">Average's % : {{avgpct6}}%</h5>
+      <footer class="w3-container w3-green w3-wide">
+        <h6 class="w3-center">Account Analysis</h6>
+        <div class="w3-half">Start Balance</div>
+        <div class="w3-half w3-right-align">${{start6}}</div>
+        <div class="w3-half">Current Balance</div>
+        <div class="w3-half w3-right-align">${{today6}}</div>
+        <div class="w3-half">Today Profit</div>
+        <div class="w3-half w3-right-align">${{pnl6}}</div>
+        <div class="w3-half">Today Profit %</div>
+        <div class="w3-half w3-right-align">{{daily6}}%</div>
+        <div class="w3-half">Average Profit</div>
+        <div class="w3-half w3-right-align">${{avgpnl6}}</div>
+        <div class="w3-half">Average Profit %</div>
+        <div class="w3-half w3-right-align">{{avgpct6}}%</div>
+        <div class="w3-half">Total Profit</div>
+        <div class="w3-half w3-right-align">${{allpnl6}}</div>
+        <div class="w3-half">Total Profit %</div>
+        <div class="w3-half w3-right-align">{{allpct6}}%</div>
+        <div>&nbsp;</div>
       </footer>
     </div>
   </div>

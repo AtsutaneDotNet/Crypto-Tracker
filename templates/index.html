@@ -16,7 +16,7 @@
     function toggleMoney() {
       $('.money').each(function() {
         var $$ = $(this), t = $$.text();
-        $$.text($$.data('t') || t.replace(/\d/g, 'X')).data('t', t);
+        $$.text($$.data('t') || t.replace(/\d/g, 'XX')).data('t', t);
       });
       $('#balanceshowhide').text($('.money').text().match(/\d/) ? 'Hide Balance' : 'Show Balance');
     }

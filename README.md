@@ -1,5 +1,5 @@
 ## Crypto-Tracker
-Simple Bot to Track Balances using Python, SQLite, &amp; Flask
+Simple Bot to track balances, profit and performance using Python, SQLite, &amp; Flask
 
 ![IMAGE ALT TEXT HERE](https://atsutanedotnet.files.wordpress.com/2020/11/demo-tracker-2.0.png)
 
@@ -38,7 +38,7 @@ To view from outside source you must edit the app.py file to match your public I
 ``` app.run(host="0.0.0.0", port=8081)```
 
 ## Donate
-- ETH/USDT/ERC20: 0x4EF84bB3908EE77EA0B1f5BECB185804beC5352d
+ETH/USDT/ERC20: 0x4EF84bB3908EE77EA0B1f5BECB185804beC5352d
 
 ## Donate to CryptoGnome - https://github.com/CryptoGnome
 ETH/USDT/ERC20: 0x647556545e529114B30E708dea09d64652e3c490

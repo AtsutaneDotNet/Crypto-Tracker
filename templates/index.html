@@ -3,31 +3,32 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@scavengerbot/cryptofont/style.min.css">
+  <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link class="theme" rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-green.css">
   <link rel='icon' href='/static/favicon.ico' type='image/x-icon'/ >
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script type="text/javascript">
     function loadref(time)
     {
     setTimeout("location.reload(true) ;",time) ;
     }
   </script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js'></script>
   <title>Crypto Tracker</title>
 </head>
 
 <body onload="Javascript:loadref(30000)" class="w3-dark-gray">
   <div class="w3-row-padding">
     <div class="w3-half">
-      <h1 class="w3-text-green w3-wide">Crypto Tracker</h1>
+      <h1 class="w3-text-theme w3-wide">Crypto Tracker</h1>
     </div>
     <div class="w3-half w3-right-align">
-      <a href="https://github.com/CryptoGnome/Crypto-Tracker" target="_blank"><button class="w3-text-green w3-wide w3-button w3-hover-green w3-round-large w3-wide" type="button">Visit Github</button></a>
+      <a href="https://github.com/AtsutaneDotNet/Crypto-Tracker" target="_blank"><button class="w3-text-theme w3-wide w3-button w3-round-large w3-wide" type="button">Visit Github</button></a>
     </div>
   </div>
   <div class="w3-row">
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin {{panel1}}">
-      <header class="w3-container w3-green w3-center">
+      <header class="w3-container w3-theme w3-center">
         <h1 class="w3-wide">{{nickname1}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
@@ -104,7 +105,7 @@
             });
         </script>
       </div>
-      <footer class="w3-container w3-green w3-wide">
+      <footer class="w3-container w3-theme w3-wide">
         <h6 class="w3-center">Account Analysis</h6>
         <div class="w3-half">Start Balance</div>
         <div class="w3-half w3-right-align">${{start}}</div>
@@ -127,7 +128,7 @@
     </div>
 
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin {{panel2}}">
-      <header class="w3-container w3-green w3-center">
+      <header class="w3-container w3-theme w3-center">
         <h1 class="w3-wide">{{nickname2}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
@@ -204,7 +205,7 @@
             });
         </script>
       </div>
-      <footer class="w3-container w3-green w3-wide">
+      <footer class="w3-container w3-theme w3-wide">
         <h6 class="w3-center">Account Analysis</h6>
         <div class="w3-half">Start Balance</div>
         <div class="w3-half w3-right-align">${{start2}}</div>
@@ -227,7 +228,7 @@
     </div>
 
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin {{panel3}}">
-      <header class="w3-container w3-green w3-center">
+      <header class="w3-container w3-theme w3-center">
         <h1 class="w3-wide">{{nickname3}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
@@ -304,7 +305,7 @@
             });
         </script>
       </div>
-      <footer class="w3-container w3-green w3-wide">
+      <footer class="w3-container w3-theme w3-wide">
         <h6 class="w3-center">Account Analysis</h6>
         <div class="w3-half">Start Balance</div>
         <div class="w3-half w3-right-align">${{start3}}</div>
@@ -327,7 +328,7 @@
     </div>
 
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin {{panel4}}">
-      <header class="w3-container w3-green w3-center">
+      <header class="w3-container w3-theme w3-center">
         <h1 class="w3-wide">{{nickname4}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
@@ -404,7 +405,7 @@
             });
         </script>
       </div>
-      <footer class="w3-container w3-green w3-wide">
+      <footer class="w3-container w3-theme w3-wide">
         <h6 class="w3-center">Account Analysis</h6>
         <div class="w3-half">Start Balance</div>
         <div class="w3-half w3-right-align">${{start4}}</div>
@@ -427,7 +428,7 @@
     </div>
 
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin {{panel5}}">
-      <header class="w3-container w3-green w3-center">
+      <header class="w3-container w3-theme w3-center">
         <h1 class="w3-wide">{{nickname5}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
@@ -504,7 +505,7 @@
             });
         </script>
       </div>
-      <footer class="w3-container w3-green w3-wide">
+      <footer class="w3-container w3-theme w3-wide">
         <h6 class="w3-center">Account Analysis</h6>
         <div class="w3-half">Start Balance</div>
         <div class="w3-half w3-right-align">${{start5}}</div>
@@ -527,7 +528,7 @@
     </div>
 
     <div class="w3-card-4 w3-col s11 m5 l3 w3-margin {{panel6}}">
-      <header class="w3-container w3-green w3-center">
+      <header class="w3-container w3-theme w3-center">
         <h1 class="w3-wide">{{nickname6}}</h1>
       </header>
       <div class="w3-container w3-white" name="chart">
@@ -604,7 +605,7 @@
             });
         </script>
       </div>
-      <footer class="w3-container w3-green w3-wide">
+      <footer class="w3-container w3-theme w3-wide">
         <h6 class="w3-center">Account Analysis</h6>
         <div class="w3-half">Start Balance</div>
         <div class="w3-half w3-right-align">${{start6}}</div>

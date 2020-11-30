@@ -16,10 +16,11 @@
     function toggleMoney() {
       $('.money').each(function() {
         var $$ = $(this), t = $$.text();
-        $$.text($$.data('t') || t.replace(/\d/g, 'XX')).data('t', t);
+        $$.text($$.data('t') || t.replace(/./g, '***').slice(0, 5)).data('t', t);
       });
       $('#balanceshowhide').text($('.money').text().match(/\d/) ? 'Hide Balance' : 'Show Balance');
     }
+    Chart.defaults.global.legend.position = 'bottom';
   </script>
   <title>Crypto Tracker</title>
 </head>

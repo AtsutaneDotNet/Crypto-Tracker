@@ -40,6 +40,10 @@ def index():
             dates1 = c.fetchall()
             conn.commit()
             conn.close()
+            if asset1 in ["usd","USD"]:
+                coin1 = 'usdt'
+            else:
+                coin1 = lower(asset1)
             panel1 = ''
         else:
             today1 = 0
@@ -56,6 +60,7 @@ def index():
             apnl = 0
             apct = 0
             panel1 = 'w3-hide'
+            coin1 = 'null'
 
         #Account 2
         if use_account2 == True:
@@ -87,6 +92,10 @@ def index():
             dates2 = c.execute('SELECT date FROM account2 WHERE rowid > 1').fetchall()
             conn.commit()
             conn.close()
+            if asset2 in ["usd","USD"]:
+                coin2 = 'usdt'
+            else:
+                coin2 = lower(asset2)
             panel2 = ''
         else:
             today2 = 0
@@ -103,6 +112,7 @@ def index():
             apnl2 = 0
             apct2 = 0
             panel2 = 'w3-hide'
+            coin2 = 'null'
 
         #Account 3
         if use_account3 == True:
@@ -134,6 +144,10 @@ def index():
             dates3 = c.execute('SELECT date FROM account3 WHERE rowid > 1').fetchall()
             conn.commit()
             conn.close()
+            if asset3 in ["usd","USD"]:
+                coin3 = 'usdt'
+            else:
+                coin3 = lower(asset3)
             panel3 = ''
         else:
             today3 = 0
@@ -150,6 +164,7 @@ def index():
             apnl3 = 0
             apct3 = 0
             panel3 = 'w3-hide'
+            coin3 = 'null'
 
         #Account 4
         if use_account4 == True:
@@ -181,6 +196,10 @@ def index():
             dates4 = c.execute('SELECT date FROM account4 WHERE rowid > 1').fetchall()
             conn.commit()
             conn.close()
+            if asset4 in ["usd","USD"]:
+                coin4 = 'usdt'
+            else:
+                coin4 = lower(asset4)
             panel4 = ''
         else:
             today4 = 0
@@ -197,6 +216,7 @@ def index():
             apnl4 = 0
             apct4 = 0
             panel4 = 'w3-hide'
+            coin4 = 'null'
 
         #Account 5
         if use_account5 == True:
@@ -228,6 +248,10 @@ def index():
             dates5 = c.execute('SELECT date FROM account5 WHERE rowid > 1').fetchall()
             conn.commit()
             conn.close()
+            if asset5 in ["usd","USD"]:
+                coin5 = 'usdt'
+            else:
+                coin5 = lower(asset5)
             panel5 = ''
         else:
             today5 = 0
@@ -244,6 +268,7 @@ def index():
             apnl5 = 0
             apct5 = 0
             panel5 = 'w3-hide'
+            coin5 = 'null'
 
         #Account 6
         if use_account6 == True:
@@ -275,6 +300,10 @@ def index():
             dates6 = c.execute('SELECT date FROM account6 WHERE rowid > 1').fetchall()
             conn.commit()
             conn.close()
+            if asset6 in ["usd","USD"]:
+                coin6 = 'usdt'
+            else:
+                coin6 = lower(asset6)
             panel6 = ''
         else:
             today6 = 0
@@ -291,14 +320,15 @@ def index():
             apnl6 = 0
             apct6 = 0
             panel6 = 'w3-hide'
+            coin6 = 'null'
 
         return render_template('index.html',
-                panel1=panel1, start=start1, today=today, pnl=pnl, daily=daily, nickname1=nickname1, allpnl=spnl, allpct=spct, avgpnl=apnl, avgpct=apct,
-                panel2=panel2, start2=start2, today2=today2, pnl2=pnl2, daily2=daily2, nickname2=nickname2, allpnl2=spnl2, allpct2=spct2, avgpnl2=apnl2, avgpct2=apct2,
-                panel3=panel3, start3=start3, today3=today3, pnl3=pnl3, daily3=daily3, nickname3=nickname3, allpnl3=spnl3, allpct3=spct3, avgpnl3=apnl3, avgpct3=apct3,
-                panel4=panel4, start4=start4, today4=today4, pnl4=pnl4, daily4=daily4, nickname4=nickname4, allpnl4=spnl4, allpct4=spct4, avgpnl4=apnl4, avgpct4=apct4,
-                panel5=panel5, start5=start5, today5=today5, pnl5=pnl5, daily5=daily5, nickname5=nickname5, allpnl5=spnl5, allpct5=spct5, avgpnl5=apnl5, avgpct5=apct5,
-                panel6=panel6, start6=start6, today6=today6, pnl6=pnl6, daily6=daily6, nickname6=nickname6, allpnl6=spnl6, allpct6=spct6, avgpnl6=apnl6, avgpct6=apct6,
+                panel1=panel1, start=start1, today=today, pnl=pnl, daily=daily, nickname1=nickname1, allpnl=spnl, allpct=spct, avgpnl=apnl, avgpct=apct, coin1=coin1,
+                panel2=panel2, start2=start2, today2=today2, pnl2=pnl2, daily2=daily2, nickname2=nickname2, allpnl2=spnl2, allpct2=spct2, avgpnl2=apnl2, avgpct2=apct2, coin2=coin2,
+                panel3=panel3, start3=start3, today3=today3, pnl3=pnl3, daily3=daily3, nickname3=nickname3, allpnl3=spnl3, allpct3=spct3, avgpnl3=apnl3, avgpct3=apct3, coin3=coin3,
+                panel4=panel4, start4=start4, today4=today4, pnl4=pnl4, daily4=daily4, nickname4=nickname4, allpnl4=spnl4, allpct4=spct4, avgpnl4=apnl4, avgpct4=apct4, coin4=coin4,
+                panel5=panel5, start5=start5, today5=today5, pnl5=pnl5, daily5=daily5, nickname5=nickname5, allpnl5=spnl5, allpct5=spct5, avgpnl5=apnl5, avgpct5=apct5, coin5=coin5,
+                panel6=panel6, start6=start6, today6=today6, pnl6=pnl6, daily6=daily6, nickname6=nickname6, allpnl6=spnl6, allpct6=spct6, avgpnl6=apnl6, avgpct6=apct6, coin6=coin6,
                 labels1=dates1, values1=pnlAllData1, values1a=pctAllData1, values1b=dailyAllData1,
                 labels2=dates2, values2=pnlAllData2, values2a=pctAllData2, values2b=dailyAllData2,
                 labels3=dates3, values3=pnlAllData3, values3a=pctAllData3, values3b=dailyAllData3,

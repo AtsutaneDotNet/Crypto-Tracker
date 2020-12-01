@@ -16,11 +16,12 @@
     function toggleMoney() {
       $('.money').each(function() {
         var $$ = $(this), t = $$.text();
-        $$.text($$.data('t') || t.replace(/./g, '***').slice(0, 5)).data('t', t);
+        $$.text($$.data('t') || t.replace(/./g, '****').slice(0, 6)).data('t', t);
       });
       $('#balanceshowhide').text($('.money').text().match(/\d/) ? 'Hide Balance' : 'Show Balance');
     }
     Chart.defaults.global.legend.position = 'bottom';
+    Chart.defaults.global.layout.padding.top = 16;
   </script>
   <title>Crypto Tracker</title>
 </head>
@@ -102,13 +103,21 @@
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'left',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "USDT",
+                    },
                     id: 'y-axis-1',
                   },{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'right',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "%",
+                    },
                     id: 'y-axis-2',
                   }],
                 }
@@ -117,7 +126,7 @@
         </script>
       </div>
       <footer class="w3-container w3-theme w3-wide">
-        <h6 class="w3-center">Account Analysis</h6>
+        <h5 class="w3-center">Account Analysis</h5>
         <div class="w3-half">Start Balance</div>
         <div class="money w3-half w3-right-align">${{start}}</div>
         <div class="w3-half">Current Balance</div>
@@ -204,13 +213,21 @@
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'left',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "USDT",
+                    },
                     id: 'y-axis-1',
                   },{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'right',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "%",
+                    },
                     id: 'y-axis-2',
                   }],
                 }
@@ -219,7 +236,7 @@
         </script>
       </div>
       <footer class="w3-container w3-theme w3-wide">
-        <h6 class="w3-center">Account Analysis</h6>
+        <h5 class="w3-center">Account Analysis</h5>
         <div class="w3-half">Start Balance</div>
         <div class="money w3-half w3-right-align">${{start2}}</div>
         <div class="w3-half">Current Balance</div>
@@ -306,13 +323,21 @@
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'left',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "USDT",
+                    },
                     id: 'y-axis-1',
                   },{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'right',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "%",
+                    },
                     id: 'y-axis-2',
                   }],
                 }
@@ -321,7 +346,7 @@
         </script>
       </div>
       <footer class="w3-container w3-theme w3-wide">
-        <h6 class="w3-center">Account Analysis</h6>
+        <h5 class="w3-center">Account Analysis</h5>
         <div class="w3-half">Start Balance</div>
         <div class="money w3-half w3-right-align">${{start3}}</div>
         <div class="w3-half">Current Balance</div>
@@ -408,13 +433,21 @@
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'left',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "USDT",
+                    },
                     id: 'y-axis-1',
                   },{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'right',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "%",
+                    },
                     id: 'y-axis-2',
                   }],
                 }
@@ -423,7 +456,7 @@
         </script>
       </div>
       <footer class="w3-container w3-theme w3-wide">
-        <h6 class="w3-center">Account Analysis</h6>
+        <h5 class="w3-center">Account Analysis</h5>
         <div class="w3-half">Start Balance</div>
         <div class="money w3-half w3-right-align">${{start4}}</div>
         <div class="w3-half">Current Balance</div>
@@ -510,13 +543,21 @@
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'left',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "USDT",
+                    },
                     id: 'y-axis-1',
                   },{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'right',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "%",
+                    },
                     id: 'y-axis-2',
                   }],
                 }
@@ -525,7 +566,7 @@
         </script>
       </div>
       <footer class="w3-container w3-theme w3-wide">
-        <h6 class="w3-center">Account Analysis</h6>
+        <h5 class="w3-center">Account Analysis</h5>
         <div class="w3-half">Start Balance</div>
         <div class="money w3-half w3-right-align">${{start5}}</div>
         <div class="w3-half">Current Balance</div>
@@ -612,13 +653,21 @@
                 scales: {
                   yAxes: [{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'left',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "USDT",
+                    },
                     id: 'y-axis-1',
                   },{
                     type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                    display: true,
+                    display: 'auto',
                     position: 'right',
+                    scaleLabel: {
+                      display: true,
+                      labelString: "%",
+                    },
                     id: 'y-axis-2',
                   }],
                 }
@@ -627,7 +676,7 @@
         </script>
       </div>
       <footer class="w3-container w3-theme w3-wide">
-        <h6 class="w3-center">Account Analysis</h6>
+        <h5 class="w3-center">Account Analysis</h5>
         <div class="w3-half">Start Balance</div>
         <div class="money w3-half w3-right-align">${{start6}}</div>
         <div class="w3-half">Current Balance</div>

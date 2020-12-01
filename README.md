@@ -37,6 +37,10 @@ To view from outside source you must edit the app.py file to match your public I
 
 ``` app.run(host="0.0.0.0", port=8081)```
 
+## Credits
+- [https://github.com/CryptoGnome/Crypto-Tracker] for the orginal Crypto Tracker
+- [https://github.com/ScavengerBot/CryptoFont] for Cryptocurrency Icon Font
+
 ## Donate
 ETH/USDT/ERC20: 0x4EF84bB3908EE77EA0B1f5BECB185804beC5352d
 

@@ -27,7 +27,7 @@
   <title>Crypto Tracker</title>
 </head>
 
-<body onload="Javascript:loadref(30000)" class="w3-theme-l1">
+<body onload="Javascript:loadref(30000); toggleMoney();" class="w3-theme-l1">
   <div class="w3-row-padding">
     <div class="w3-twothird">
       <h1 class="w3-wide"><span class="sbi sbi-btc"></span> Crypto Tracker</h1>
@@ -79,8 +79,8 @@
               },{
                 type: 'bar',
                 label: 'Daily PNL',
-                borderColor: 'rgb(144, 238, 144)',
-                backgroundColor: 'rgb(144, 238, 144)',
+                borderColor: 'rgb(255, 140, 0)',
+                backgroundColor: 'rgb(255, 140, 0)',
                 fill: false,
                 data : [
                   {% for item in values1b %}
@@ -189,8 +189,8 @@
               },{
                 type: 'bar',
                 label: 'Daily PNL',
-                borderColor: 'rgb(144, 238, 144)',
-                backgroundColor: 'rgb(144, 238, 144)',
+                borderColor: 'rgb(255, 140, 0)',
+                backgroundColor: 'rgb(255, 140, 0)',
                 fill: false,
                 data : [
                   {% for item in values2b %}
@@ -299,8 +299,8 @@
               },{
                 type: 'bar',
                 label: 'Daily PNL',
-                borderColor: 'rgb(144, 238, 144)',
-                backgroundColor: 'rgb(144, 238, 144)',
+                borderColor: 'rgb(255, 140, 0)',
+                backgroundColor: 'rgb(255, 140, 0)',
                 fill: false,
                 data : [
                   {% for item in values3b %}
@@ -409,8 +409,8 @@
               },{
                 type: 'bar',
                 label: 'Daily PNL',
-                borderColor: 'rgb(144, 238, 144)',
-                backgroundColor: 'rgb(144, 238, 144)',
+                borderColor: 'rgb(255, 140, 0)',
+                backgroundColor: 'rgb(255, 140, 0)',
                 fill: false,
                 data : [
                   {% for item in values4b %}
@@ -519,8 +519,8 @@
               },{
                 type: 'bar',
                 label: 'Daily PNL',
-                borderColor: 'rgb(144, 238, 144)',
-                backgroundColor: 'rgb(144, 238, 144)',
+                borderColor: 'rgb(255, 140, 0)',
+                backgroundColor: 'rgb(255, 140, 0)',
                 fill: false,
                 data : [
                   {% for item in values5b %}
@@ -629,8 +629,8 @@
               },{
                 type: 'bar',
                 label: 'Daily PNL',
-                borderColor: 'rgb(144, 238, 144)',
-                backgroundColor: 'rgb(144, 238, 144)',
+                borderColor: 'rgb(255, 140, 0)',
+                backgroundColor: 'rgb(255, 140, 0)',
                 fill: false,
                 data : [
                   {% for item in values6b %}

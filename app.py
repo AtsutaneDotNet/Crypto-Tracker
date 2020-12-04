@@ -43,7 +43,7 @@ def index():
             if asset1 in ["usd","USD"]:
                 coin1 = 'usdt'
             else:
-                coin1 = lower(asset1)
+                coin1 = asset1.lower()
             panel1 = ''
         else:
             today1 = 0
@@ -95,7 +95,7 @@ def index():
             if asset2 in ["usd","USD"]:
                 coin2 = 'usdt'
             else:
-                coin2 = lower(asset2)
+                coin2 = asset2.lower()
             panel2 = ''
         else:
             today2 = 0
@@ -147,7 +147,7 @@ def index():
             if asset3 in ["usd","USD"]:
                 coin3 = 'usdt'
             else:
-                coin3 = lower(asset3)
+                coin3 = asset3.lower()
             panel3 = ''
         else:
             today3 = 0
@@ -199,7 +199,7 @@ def index():
             if asset4 in ["usd","USD"]:
                 coin4 = 'usdt'
             else:
-                coin4 = lower(asset4)
+                coin4 = asset4.lower()
             panel4 = ''
         else:
             today4 = 0
@@ -251,7 +251,7 @@ def index():
             if asset5 in ["usd","USD"]:
                 coin5 = 'usdt'
             else:
-                coin5 = lower(asset5)
+                coin5 = asset5.lower()
             panel5 = ''
         else:
             today5 = 0
@@ -303,7 +303,7 @@ def index():
             if asset6 in ["usd","USD"]:
                 coin6 = 'usdt'
             else:
-                coin6 = lower(asset6)
+                coin6 = asset6.lower()
             panel6 = ''
         else:
             today6 = 0

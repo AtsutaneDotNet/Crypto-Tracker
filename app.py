@@ -45,6 +45,10 @@ def index():
             else:
                 coin1 = asset1.lower()
             panel1 = ''
+            dates1 = [(datetime.datetime.strptime(date, '%Y-%m-%d')).strftime("%d/%m/%Y") for date in dates1]
+            pctAllData1 = [round((value),2) for value in pctAllData1]
+            dailyAllData1 = [round((value),4) for value in dailyAllData1]
+            pnlAllData1 = [round((value),4) for value in pnlAllData1]
         else:
             today1 = 0
             pnl1 = 0
@@ -97,6 +101,10 @@ def index():
             else:
                 coin2 = asset2.lower()
             panel2 = ''
+            dates2 = [(datetime.datetime.strptime(date, '%Y-%m-%d')).strftime("%d/%m/%Y") for date in dates2]
+            pctAllData2 = [round((value),2) for value in pctAllData2]
+            dailyAllData2 = [round((value),4) for value in dailyAllData2]
+            pnlAllData2 = [round((value),4) for value in pnlAllData2]
         else:
             today2 = 0
             pnl2 = 0
@@ -149,6 +157,10 @@ def index():
             else:
                 coin3 = asset3.lower()
             panel3 = ''
+            dates3 = [(datetime.datetime.strptime(date, '%Y-%m-%d')).strftime("%d/%m/%Y") for date in dates3]
+            pctAllData3 = [round((value),2) for value in pctAllData3]
+            dailyAllData3 = [round((value),4) for value in dailyAllData3]
+            pnlAllData3 = [round((value),4) for value in pnlAllData3]
         else:
             today3 = 0
             pnl3 = 0
@@ -201,6 +213,10 @@ def index():
             else:
                 coin4 = asset4.lower()
             panel4 = ''
+            dates4 = [(datetime.datetime.strptime(date, '%Y-%m-%d')).strftime("%d/%m/%Y") for date in dates4]
+            pctAllData4 = [round((value),2) for value in pctAllData4]
+            dailyAllData4 = [round((value),4) for value in dailyAllData4]
+            pnlAllData4 = [round((value),4) for value in pnlAllData4]
         else:
             today4 = 0
             pnl4 = 0
@@ -253,6 +269,10 @@ def index():
             else:
                 coin5 = asset5.lower()
             panel5 = ''
+            dates5 = [(datetime.datetime.strptime(date, '%Y-%m-%d')).strftime("%d/%m/%Y") for date in dates5]
+            pctAllData5 = [round((value),2) for value in pctAllData5]
+            dailyAllData5 = [round((value),4) for value in dailyAllData5]
+            pnlAllData5 = [round((value),4) for value in pnlAllData5]
         else:
             today5 = 0
             pnl5 = 0
@@ -305,6 +325,10 @@ def index():
             else:
                 coin6 = asset6.lower()
             panel6 = ''
+            dates6 = [(datetime.datetime.strptime(date, '%Y-%m-%d')).strftime("%d/%m/%Y") for date in dates6]
+            pctAllData6 = [round((value),2) for value in pctAllData6]
+            dailyAllData6 = [round((value),4) for value in dailyAllData6]
+            pnlAllData6 = [round((value),4) for value in pnlAllData6]
         else:
             today6 = 0
             pnl6 = 0

@@ -50,6 +50,7 @@ def binance(accountDB, key, secret, start, nickname):
     binanceBalance = round(float(account['totalWalletBalance']), 2)
     todayCalc = datetime.date.today()
     yesterdayCalc = todayCalc - datetime.timedelta(days = 1)
+    ostart = start
 
     today = str(todayCalc)
     yesterday = str(yesterdayCalc)
@@ -80,11 +81,11 @@ def binance(accountDB, key, secret, start, nickname):
                 pnl = data[2] - data[1]
                 daily = pnl/data[1] * 100
                 start = data[2]
-                overall = ((binanceBalance/start)-1) * 100
+                overall = ((binanceBalance/ostart)-1) * 100
         else:
             pnl = binanceBalance - start
             daily = pnl / start * 100
-            overall = ((binanceBalance/start)-1) * 100
+            overall = ((binanceBalance/ostart)-1) * 100
 
     except OperationalError:
         print("Error in Line")
@@ -102,8 +103,7 @@ def binance(accountDB, key, secret, start, nickname):
         start = data[2]
         pnl = binanceBalance - start
         daily = pnl/start * 100
-        #overall = data[5] + daily
-        overall = ((binanceBalance/start)-1) * 100
+        overall = ((binanceBalance/ostart)-1) * 100
         c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
                   (today, start, binanceBalance, pnl, daily, overall, nickname))
 
@@ -120,7 +120,7 @@ def binance(accountDB, key, secret, start, nickname):
         start = start
         pnl = binanceBalance - start
         daily = pnl/start * 100
-        overall = ((binanceBalance/start)-1) * 100
+        overall = ((binanceBalance/ostart)-1) * 100
         c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
                   (today, start, binanceBalance, pnl, daily, overall, nickname))
 
@@ -143,6 +143,7 @@ def bybit(accountDB, key, secret, start, nickname, asset):
     data = bybit.fetch_balance(params=params)
     account = data['info']['result'][asset]
     balance = round(float(account['wallet_balance']), 7)
+    ostart = start
 
     todayCalc = datetime.date.today()
     yesterdayCalc = todayCalc - datetime.timedelta(days=1)
@@ -175,11 +176,11 @@ def bybit(accountDB, key, secret, start, nickname, asset):
                 pnl = round(data[2] - data[1], 6)
                 daily = round(pnl / data[1] * 100, 6)
                 start = data[2]
-                overall = ((balance/start)-1) * 100
+                overall = ((balance/ostart)-1) * 100
         else:
             pnl = round(balance - start, 6 )
             daily = round(pnl / start * 100, 6)
-            overall = ((balance/start)-1) * 100
+            overall = ((balance/ostart)-1) * 100
 
     except OperationalError:
         #print("Error in Line")
@@ -197,7 +198,7 @@ def bybit(accountDB, key, secret, start, nickname, asset):
         start = data[2]
         pnl = balance - start
         daily = pnl / start * 100
-        overall = ((balance/start)-1) * 100
+        overall = ((balance/ostart)-1) * 100
         c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
                   (today, start, balance, pnl, daily, overall, nickname))
 
@@ -214,7 +215,7 @@ def bybit(accountDB, key, secret, start, nickname, asset):
         start = start
         pnl = round(balance - start, 6)
         daily = round(pnl / start * 100, 6)
-        overall = ((balance/start)-1) * 100
+        overall = ((balance/ostart)-1) * 100
         c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
                   (today, start, balance, pnl, daily, overall, nickname))
 
@@ -234,6 +235,7 @@ def ftx(accountDB, key, secret, start, nickname):
     # get Account Balance
     account = ftx.privateGetAccount()['result']
     balance = round(float(account['collateral']), 2)
+    ostart = start
 
     todayCalc = datetime.date.today()
     yesterdayCalc = todayCalc - datetime.timedelta(days=1)
@@ -266,11 +268,11 @@ def ftx(accountDB, key, secret, start, nickname):
                 pnl = round(data[2] - data[1], 6)
                 daily = round(pnl / data[1] * 100, 6)
                 start = data[2]
-                overall = ((balance/start)-1) * 100
+                overall = ((balance/ostart)-1) * 100
         else:
             pnl = round(balance - start, 6)
             daily = round(pnl / start * 100, 6)
-            overall = ((balance/start)-1) * 100
+            overall = ((balance/ostart)-1) * 100
 
     except OperationalError:
         print("Error in Line")
@@ -288,7 +290,7 @@ def ftx(accountDB, key, secret, start, nickname):
         start = data[2]
         pnl = balance - start
         daily = pnl / start * 100
-        overall = ((balance/start)-1) * 100
+        overall = ((balance/ostart)-1) * 100
         c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
                   (today, start, balance, pnl, daily, overall, nickname))
 
@@ -305,7 +307,7 @@ def ftx(accountDB, key, secret, start, nickname):
         start = start
         pnl = round(balance - start, 6)
         daily = round(pnl / start * 100, 6)
-        overall = ((balance/start)-1) * 100
+        overall = ((balance/ostart)-1) * 100
         c.execute('INSERT INTO ' + accountDB + ' VALUES (?, ?, ? , ?, ?, ?, ?)',
                   (today, start, balance, pnl, daily, overall, nickname))
 

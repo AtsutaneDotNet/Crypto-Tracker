@@ -1,0 +1,16 @@
+[
+    {
+        "enable": "false",
+        "exchange": "binance",
+        "key": "",
+        "secret": "",
+        "uid": ""
+    },
+    {
+        "enable": "false",
+        "exchange": "bybit",
+        "key": "",
+        "secret": "",
+        "uid": ""
+    }
+]

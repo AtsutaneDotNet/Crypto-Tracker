@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel='icon' href='/static/favicon.ico' type='image/x-icon'/ >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js" integrity="sha512-VCHVc5miKoln972iJPvkQrUYYq7XpxXzvqNfiul1H4aZDwGBGC0lq373KNleaB2LpnC2a/iNfE5zoRYmB4TRDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@scavengerbot/cryptofont/style.min.css">
+    <link class="theme" rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript">
+      function loadref(time)
+      {
+      setTimeout("location.reload(true) ;",time) ;
+      }
+      function toggleMoney() {
+        $('.money').each(function() {
+          var $$ = $(this), t = $$.text();
+          $$.text($$.data('t') || t.replace(/./g, '*****').slice(0, 5)).data('t', t);
+        });
+        $('#balanceshowhide').text($('.money').text().match(/\d/) ? 'Hide Balance' : 'Show Balance');
+      }
+    </script>
+    <title>Crypto Tracker 2.0</title>
+  </head>
+  <body class="w3-theme-l1">
+    <div class="w3-row-padding">
+      <div class="w3-container w3-rest w3-padding-large">
+        <div class="w3-col w3-padding-small">
+          <h1 class="w3-wide"><span class="sbi sbi-btc"></span> Crypto Tracker 2.0</h1>
+        </div>
+        <div class="w3-twothird w3-padding-small">
+          <table id="information" class="w3-card-4 w3-table w3-centered">
+            <thead>
+              <tr class="w3-theme">
+                <th>30 Days Profit And Loss</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td>
+                <canvas id="lineChart"></canvas>
+                <script>
+                  const lineChart = {
+                    labels: [
+                      {% for dates in dates %}
+                        "{{ dates['date'] }}",
+                      {% endfor %}
+                    ],
+                    datasets: [
+                      {
+                        label: "USDT",
+                        data: [
+                          {% for usdt in usdt %}
+                            "{{ usdt[0] }}",
+                          {% endfor %}
+                        ],
+                        fill: false,
+                        borderColor: 'rgb(0, 165, 80)',
+                        tension: 0.1
+                      },
+                      {
+                        label: "BTC",
+                        data: [
+                          {% for btc in btc %}
+                            "{{ btc[0] }}",
+                          {% endfor %}
+                        ],
+                        fill: false,
+                        borderColor: 'rgb(255, 165, 0)',
+                        tension: 0.1
+                      },
+                      {
+                        label: "EOS",
+                        data: [
+                          {% for eos in eos %}
+                            "{{ eos[0] }}",
+                          {% endfor %}
+                        ],
+                        fill: false,
+                        borderColor: 'rgb(172, 172, 172)',
+                        tension: 0.1
+                      },
+                      {
+                        label: "ETH",
+                        data: [
+                          {% for eth in eth %}
+                            "{{ eth[0] }}",
+                          {% endfor %}
+                        ],
+                        fill: false,
+                        borderColor: 'rgb(102, 153, 204)',
+                        tension: 0.1
+                      },
+                      {
+                        label: "XRP",
+                        data: [
+                          {% for xrp in xrp %}
+                            "{{ xrp[0] }}",
+                          {% endfor %}
+                        ],
+                        fill: false,
+                        borderColor: 'rgb(93, 57, 84)',
+                        tension: 0.1
+                      },
+                      {
+                        label: "Cumulative PNL",
+                        data: [
+                          {% for sum_cum in sum_cum %}
+                            "{{ sum_cum[0] }}",
+                          {% endfor %}
+                        ],
+                        fill: false,
+                        borderColor: 'rgb(212, 175, 55)',
+                        tension: 0.1
+                      },
+                    ]
+                  };
+                  var ctx = document.getElementById('lineChart').getContext('2d');
+                  var myChart = new Chart(ctx, {
+                      type: 'line',
+                      data: lineChart,
+                      options: {
+                        interaction: {
+                          intersect: false,
+                          mode: 'index',
+                        },
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        aspectRatio: 1,
+                        plugins: {
+                          legend: {
+                            labels: {
+                              color: "white",
+                            }
+                          }
+                        }
+                      }
+                  });
+                </script>
+              </td>
+            </tbody>
+          </table>
+        </div>
+        <div class="w3-third w3-padding-small">
+          <table id="information" class="w3-card-4 w3-table w3-centered">
+            <thead>
+              <tr class="w3-theme">
+                <th>Wallet Overviews</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td>
+                <canvas id="doughChart"></canvas>
+                <script>
+                  const doughChart = {
+                    labels: [
+                      {% for data in data %}
+                        "{{ data['type'] }}",
+                      {% endfor %}
+                    ],
+                    datasets: [
+                      {
+                        label: 'My First Dataset',
+                        data: [
+                          {% for data in data %}
+                            "{{ data['wallet_usd'] }}",
+                          {% endfor %}
+                        ],
+                        backgroundColor: [
+                          'rgb(0, 165, 80)',
+                          'rgb(255, 165, 0)',
+                          'rgb(172, 172, 172)',
+                          'rgb(102, 153, 204)',
+                          'rgb(93, 57, 84)'
+                        ],
+                        hoverMode: 4
+                      }
+                    ]
+                  };
+                  var ctx = document.getElementById('doughChart').getContext('2d');
+                  var myChart = new Chart(ctx, {
+                      type: 'doughnut',
+                      data: doughChart,
+                      options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        aspectRatio: 1,
+                        plugins: {
+                          legend: {
+                            labels: {
+                              color: "white",
+                            }
+                          }
+                        }
+                      }
+                  });
+                </script>
+              </td>
+            </tbody>
+          </table>
+        </div>
+        <div class="w3-threequarter w3-padding-small">
+          <h2 class="w3-wide"><span class="sbi sbi-usdt"></span> Daily Profit And Loss</h2>
+        </div>
+        <div class="w3-quarter w3-right-align w3-padding-small">
+          <button id="balanceshowhide" class="w3-wide w3-button w3-round-large w3-wide w3-theme w3-margin-top" type="button" onclick="toggleMoney()">Hide Balance</button>
+        </div>
+        <div class="w3-col w3-padding-small">
+          <table id="information" class="w3-card-4 w3-table w3-centered">
+            <thead>
+              <tr class="w3-theme">
+                <th>Type</th>
+                <th>Balance</th>
+                <th>Balance USD</th>
+                <th>Realize PNL</th>
+                <th>Commission</th>
+                <th>Funding Fee</th>
+                <th>Actual Profit</th>
+                <th>Actual Profit USD</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for data in data %}
+              <tr>
+                <td><span class="w3-left sbi sbi-{{ data['type']|lower }}"></span>{{ data['type'] }}</td>
+                <td class="money">{{ data['wallet'] }}</td>
+                <td class="money">{{ "${:,.2f}".format(data['wallet_usd']) }}</td>
+                <td>{{ data['pnl'] }}</td>
+                <td>{{ data['commision'] }}</td>
+                <td>{{ data['funding'] }}</td>
+                <td>{{ data['income'] }}</td>
+                <td>{{ "${:,.2f}".format(data['income_usd']) }}</td>
+              </tr>
+              {% endfor %}
+              <tr>
+                <td></td>
+                <td></td>
+                <td class="money">{{ "${:,.2f}".format(sum_all[0]) }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ "${:,.2f}".format(sum_pnl[0]) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,48 +1,70 @@
-## Crypto-Tracker
+# Crypto Tracker 2.0
 Simple Bot to track balances, profit and performance using Python, SQLite, &amp; Flask
 
-![IMAGE ALT TEXT HERE](https://atsutanedotnet.files.wordpress.com/2020/11/demo-tracker-2.0.png)
+![tracker](https://user-images.githubusercontent.com/6040550/121795775-77864f80-cc46-11eb-8d59-a3d10dddc120.PNG)
 
 # SETUP GUIDE
 
-## Install Python:
+# Install Python:
 
 https://www.python.org/downloads/
 
-## Clone or Download Zip File Below:
+# Clone or Download Zip File Below:
 
 https://github.com/AtsutaneDotNet/Crypto-Tracker/archive/master.zip
 
-## Install Requirements via Windows Command Prompt:
+# Install Requirements via Windows Command Prompt:
 
-```pip install -r requirements.txt```
+```bash
+pip install -r requirements.txt
+```
 
 ## Edit Accounts to match Exchanges & Keys using a text editor
 
-```accounts.py```
+`
+accounts.json
+`
 
-## Run Main.py
+UID will be insert automatically when script process the account list.
+
+```json
+[
+    {
+        "enable": "false",
+        "exchange": "binance",
+        "key": "",
+        "secret": "",
+        "uid": ""
+    },
+    {
+        "enable": "false",
+        "exchange": "bybit",
+        "key": "",
+        "secret": "",
+        "uid": ""
+    }
+]
+```
+
+# Run tracker.py & Visit http://localhost:8000/ to view UI
 
 open CMD prompt
 cd C:path/toyour/directory
-main.py
+tracker.py
 
-## Run App.py & Visit http://localhost:8000/ to view UI
+To view from outside source you must edit the tracker.py file to match your public IP & set a custom port using the code below, you then must open the port to outside traffic.
 
-open CMD prompt
-cd C:path/toyour/directory
-app.py
+```python
+app.run(host="0.0.0.0", port=8000)
+```
 
-To view from outside source you must edit the app.py file to match your public IP & set a custom port using the code below, you then must open the port to outside traffic.
-
-``` app.run(host="0.0.0.0", port=8081)```
-
-## Credits
-- [https://github.com/CryptoGnome/Crypto-Tracker] for the orginal Crypto Tracker
+# Credits
+- [https://github.com/CryptoGnome/Crypto-Tracker] for The Orginal Crypto Tracker
 - [https://github.com/ScavengerBot/CryptoFont] for Cryptocurrency Icon Font
 
-## Donate
-ETH/USDT/ERC20: 0x4EF84bB3908EE77EA0B1f5BECB185804beC5352d
+# Donate To Crypto Tracker 2.0 Development
+- ETH/USDT/ERC20: 0x4EF84bB3908EE77EA0B1f5BECB185804beC5352d
+- BSC 0xaD687b24852Ae916Cfb740871768E7b214175729
 
-## Donate to CryptoGnome - https://github.com/CryptoGnome
-ETH/USDT/ERC20: 0x647556545e529114B30E708dea09d64652e3c490
+# Donate to CryptoGnome - https://github.com/CryptoGnome
+- ETH/USDT/ERC20: 0x647556545e529114B30E708dea09d64652e3c490

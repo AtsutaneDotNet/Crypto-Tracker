@@ -21,9 +21,9 @@ pip install -r requirements.txt
 
 ## Edit Accounts to match Exchanges & Keys using a text editor
 
-`
+```
 accounts.json
-`
+```
 
 UID will be insert automatically when script process the account list.
 

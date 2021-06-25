@@ -96,26 +96,38 @@ def getBinanceData(key,secret,uid):
         'option': {'defaultMarket': 'futures'}
     })
     accountInfo = exchange.fapiPrivateGetAccount()
-    incomeInfo = exchange.fapiPrivateGetIncome({ 'limit': '1000' })
+    realized_pnl = exchange.fapiPrivateGetIncome({ 'incomeType': 'REALIZED_PNL' })
+    commision = exchange.fapiPrivateGetIncome({ 'incomeType': 'COMMISSION' })
+    funding_fee = exchange.fapiPrivateGetIncome({ 'incomeType': 'FUNDING_FEE' })
+    reff_kickback = exchange.fapiPrivateGetIncome({ 'incomeType': 'REFERRAL_KICKBACK' })
     wallet = float(accountInfo['totalWalletBalance'])
     income_value = 0
     pnl_value = 0
     comm_value = 0
     funding_value = 0
+    kickback_value = 0
     cum_pnl = 0
-    for profit in incomeInfo:
+    for profit in realized_pnl:
         time = datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y")
         type = profit['asset']
-        if time == today and profit['incomeType'] != 'TRANSFER':
-            income_value = income_value + float(profit['income'])
-            if profit['incomeType'] == 'REALIZED_PNL':
-                pnl_value = pnl_value + float(profit['income'])
-            elif profit['incomeType'] == 'COMMISSION':
-                comm_value = comm_value + float(profit['income'])
-            elif profit['incomeType'] == 'FUNDING_FEE':
-                funding_value = funding_value + float(profit['income'])
-            else:
-                pass
+        if time == today:
+            pnl_value = pnl_value + float(profit['income'])
+    for profit in commision:
+        time = datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y")
+        type = profit['asset']
+        if time == today:
+            comm_value = comm_value + float(profit['income'])
+    for profit in funding_fee:
+        time = datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y")
+        type = profit['asset']
+        if time == today:
+            funding_value = funding_value + float(profit['income'])
+    for profit in reff_kickback:
+        time = datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y")
+        type = profit['asset']
+        if time == today:
+            kickback_value = kickback_value + float(profit['income'])
+    income_value = pnl_value + comm_value + funding_value + kickback_value
     #Try to process cum pnl
     conn = sqlite3.connect('crypto.db')
     conn.row_factory = sqlite3.Row

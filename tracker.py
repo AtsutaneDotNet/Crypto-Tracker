@@ -108,24 +108,19 @@ def getBinanceData(key,secret,uid):
     kickback_value = 0
     cum_pnl = 0
     for profit in realized_pnl:
-        time = datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y")
         type = profit['asset']
-        if time == today:
+        if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             pnl_value = pnl_value + float(profit['income'])
     for profit in commision:
         time = datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y")
         type = profit['asset']
-        if time == today:
+        if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             comm_value = comm_value + float(profit['income'])
     for profit in funding_fee:
-        time = datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y")
-        type = profit['asset']
-        if time == today:
+        if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             funding_value = funding_value + float(profit['income'])
     for profit in reff_kickback:
-        time = datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y")
-        type = profit['asset']
-        if time == today:
+        if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             kickback_value = kickback_value + float(profit['income'])
     income_value = pnl_value + comm_value + funding_value + kickback_value
     #Try to process cum pnl

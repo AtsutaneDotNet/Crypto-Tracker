@@ -25,7 +25,7 @@ def createTrackerDB():
     print("[" + Fore.CYAN + getNowTimes() + Fore.WHITE + "] Creating " + Fore.GREEN + "Data Tracking" + Fore.WHITE + " Table")
     conn = sqlite3.connect('crypto.db')
     c = conn.cursor()
-    c.execute('CREATE TABLE income (date text, wallet integer, wallet_usd integer, income integer, income_usd integer, pnl integer, commision integer, funding integer, cumulative integer, cumulative_usd integer, type text, exchange text, timestamp integer, uuid text)')
+    c.execute('CREATE TABLE income (date text, wallet integer, wallet_usd integer, income integer, income_usd integer, pnl integer, commision integer, funding integer, percentage integer, percentage_cum integer, cumulative integer, cumulative_usd integer, type text, exchange text, timestamp integer, uuid text)')
     conn.commit()
     conn.close()
 
@@ -96,50 +96,55 @@ def getBinanceData(key,secret,uid):
         'option': {'defaultMarket': 'futures'}
     })
     accountInfo = exchange.fapiPrivateGetAccount()
-    realized_pnl = exchange.fapiPrivateGetIncome({ 'incomeType': 'REALIZED_PNL' })
-    commision = exchange.fapiPrivateGetIncome({ 'incomeType': 'COMMISSION' })
-    funding_fee = exchange.fapiPrivateGetIncome({ 'incomeType': 'FUNDING_FEE' })
-    reff_kickback = exchange.fapiPrivateGetIncome({ 'incomeType': 'REFERRAL_KICKBACK' })
     wallet = float(accountInfo['totalWalletBalance'])
     income_value = 0
+    pnl_pct = 0
     pnl_value = 0
     comm_value = 0
     funding_value = 0
     kickback_value = 0
     cum_pnl = 0
+    cum_pct = 0
+    realized_pnl = exchange.fapiPrivateGetIncome({ 'incomeType': 'REALIZED_PNL' })
     for profit in realized_pnl:
         type = profit['asset']
         if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             pnl_value = pnl_value + float(profit['income'])
+    commision = exchange.fapiPrivateGetIncome({ 'incomeType': 'COMMISSION' })
     for profit in commision:
         time = datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y")
         type = profit['asset']
         if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             comm_value = comm_value + float(profit['income'])
+    funding_fee = exchange.fapiPrivateGetIncome({ 'incomeType': 'FUNDING_FEE' })
     for profit in funding_fee:
         if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             funding_value = funding_value + float(profit['income'])
+    reff_kickback = exchange.fapiPrivateGetIncome({ 'incomeType': 'REFERRAL_KICKBACK' })
     for profit in reff_kickback:
         if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             kickback_value = kickback_value + float(profit['income'])
     income_value = pnl_value + comm_value + funding_value + kickback_value
+    pnl_pct = (income_value / wallet) * 100
     #Try to process cum pnl
     conn = sqlite3.connect('crypto.db')
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
     try:
-        cum_data = c.execute('SELECT sum(income) FROM income WHERE type = ?',(type,)).fetchone()
+        cum_data = c.execute('SELECT sum(income),sum(percentage) FROM income WHERE type = ?',(type,)).fetchone()
         if cum_data[0] != None:
             cum_pnl = cum_data[0]
+            cum_pct = cum_data[1]
         else:
             pass
     except OperationalError as e:
         createTrackerDB()
         return
     except Exception as e:
-        cum_data = c.execute('SELECT sum(income) FROM income WHERE type = ?',(type,)).fetchone()
+        cum_data = c.execute('SELECT sum(income),sum(percentage) FROM income WHERE type = ?',(type,)).fetchone()
         if cum_data[0] != None:
             cum_pnl = cum_data[0]
+            cum_pct = cum_data[1]
         else:
             pass
     conn.commit()
@@ -150,16 +155,16 @@ def getBinanceData(key,secret,uid):
     try:
         c.execute('SELECT * FROM income')
         c.execute('DELETE FROM income WHERE date = ? AND uuid = ? AND type = ?', (today,uid,type,))
-        c.execute('INSERT INTO income VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                  (today, round(wallet,2), round(wallet,2), round(income_value,2), round(income_value,2), round(pnl_value,2), round(comm_value,2), round(funding_value,2), round(cum_pnl,2), round(cum_pnl,2), type, exchange_id, timestamp, uid))
+        c.execute('INSERT INTO income VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                  (today, round(wallet,2), round(wallet,2), round(income_value,2), round(income_value,2), round(pnl_value,2), round(comm_value,2), round(funding_value,2), round(pnl_pct,2), round(cum_pct,2), round(cum_pnl,2), round(cum_pnl,2), type, exchange_id, timestamp, uid))
     except OperationalError as e:
         createTrackerDB()
         return
     except IndexError as e:
         c.execute('SELECT * FROM income')
         c.execute('DELETE FROM income WHERE date = ? AND uuid = ? AND type = ?', (today,uid,type,))
-        c.execute('INSERT INTO income VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                  (today, round(wallet,2), round(wallet,2), round(income_value,2), round(income_value,2), round(pnl_value,2), round(comm_value,2), round(funding_value,2), round(cum_pnl,2), round(cum_pnl,2), type, exchange_id, timestamp, uid))
+        c.execute('INSERT INTO income VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                  (today, round(wallet,2), round(wallet,2), round(income_value,2), round(income_value,2), round(pnl_value,2), round(comm_value,2), round(funding_value,2), round(pnl_pct,2), round(cum_pct,2), round(cum_pnl,2), round(cum_pnl,2), type, exchange_id, timestamp, uid))
     conn.commit()
     conn.close()
     print("[" + Fore.CYAN + getNowTimes() + Fore.WHITE + "] Complete " + Fore.GREEN + "Binance" + Fore.WHITE + " Data Tracking")
@@ -185,10 +190,12 @@ def getBybitData(key,secret,uid):
         wallet = float(account['data']['wallet_balance'])
         type = account['data']['symbol'].replace("USD","")
         income_value = 0
+        pnl_pct = 0
         pnl_value = 0
         comm_value = 0
         funding_value = 0
         cum_pnl = 0
+        cum_pct = 0
         for profit in incomeInfo['result']['data']:
             time = datetime.datetime.fromisoformat(profit['exec_time'].replace("Z", "+00:00")).strftime("%d/%m/%Y")
             if time == today and profit['coin'] == type and profit['type'] in income_type:
@@ -202,6 +209,7 @@ def getBybitData(key,secret,uid):
                 else:
                     pass
         ticker_symbol = type+"/USD"
+        pnl_pct = (income_value / wallet) * 100
         income_usd = income_value * getTickers[ticker_symbol]['last']
         wallet_usd = wallet * getTickers[ticker_symbol]['last']
         #Try to process cum pnl
@@ -209,18 +217,20 @@ def getBybitData(key,secret,uid):
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
         try:
-            cum_data = c.execute('SELECT sum(income) FROM income WHERE type = ?',(type,)).fetchone()
+            cum_data = c.execute('SELECT sum(income),sum(percentage) FROM income WHERE type = ?',(type,)).fetchone()
             if cum_data[0] != None:
                 cum_pnl = cum_data[0]
+                cum_pct = cum_data[1]
             else:
                 pass
         except OperationalError as e:
             createTrackerDB()
             return
         except Exception as e:
-            cum_data = c.execute('SELECT sum(income) FROM income WHERE type = ?',(type,)).fetchone()
+            cum_data = c.execute('SELECT sum(income),sum(percentage) FROM income WHERE type = ?',(type,)).fetchone()
             if cum_data[0] != None:
                 cum_pnl = cum_data[0]
+                cum_pct = cum_data[1]
             else:
                 pass
         cum_pnlusd = cum_pnl * getTickers[ticker_symbol]['last']
@@ -232,16 +242,16 @@ def getBybitData(key,secret,uid):
         try:
             c.execute('SELECT * FROM income')
             c.execute('DELETE FROM income WHERE date = ? AND uuid = ? AND type = ?', (today,uid,type,))
-            c.execute('INSERT INTO income VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                      (today, round(wallet,4), round(wallet_usd,2), round(income_value,4), round(income_usd,2), round(pnl_value,4), round(comm_value,4), round(funding_value,4), round(cum_pnl,4), round(cum_pnlusd,2), type, exchange_id, timestamp, uid))
+            c.execute('INSERT INTO income VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                      (today, round(wallet,4), round(wallet_usd,2), round(income_value,4), round(income_usd,2), round(pnl_value,4), round(comm_value,4), round(funding_value,4), round(pnl_pct,2), round(cum_pct,2), round(cum_pnl,4), round(cum_pnl,2), type, exchange_id, timestamp, uid))
         except OperationalError as e:
             createTrackerDB()
             return
         except IndexError as e:
             c.execute('SELECT * FROM income')
             c.execute('DELETE FROM income WHERE date = ? AND uuid = ? AND type = ?', (today,uid,type,))
-            c.execute('INSERT INTO income VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                      (today, round(wallet,4), round(wallet_usd,2), round(income_value,4), round(income_usd,2), round(pnl_value,4), round(comm_value,4), round(funding_value,4), round(cum_pnl,4), round(cum_pnlusd,2), type, exchange_id, timestamp, uid))
+            c.execute('INSERT INTO income VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                      (today, round(wallet,4), round(wallet_usd,2), round(income_value,4), round(income_usd,2), round(pnl_value,4), round(comm_value,4), round(funding_value,4), round(pnl_pct,2), round(cum_pct,2), round(cum_pnl,4), round(cum_pnl,2), type, exchange_id, timestamp, uid))
         conn.commit()
         conn.close()
     print("[" + Fore.CYAN + getNowTimes() + Fore.WHITE + "] Complete " + Fore.GREEN + "Bybit" + Fore.WHITE + " Data Tracking")
@@ -261,18 +271,17 @@ def index():
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
     data = c.execute('SELECT * FROM income WHERE date = ?',(today,)).fetchall()
-    dates = c.execute('SELECT date FROM income GROUP BY date ORDER BY date LIMIT 30').fetchall()
-    usdt = c.execute('SELECT cumulative_usd FROM income WHERE type = ? ORDER BY date LIMIT 30',("USDT",)).fetchall()
-    btc = c.execute('SELECT cumulative_usd FROM income WHERE type = ? ORDER BY date LIMIT 30',("BTC",)).fetchall()
-    eth = c.execute('SELECT cumulative_usd FROM income WHERE type = ? ORDER BY date LIMIT 30',("ETH",)).fetchall()
-    eos = c.execute('SELECT cumulative_usd FROM income WHERE type = ? ORDER BY date LIMIT 30',("EOS",)).fetchall()
-    xrp = c.execute('SELECT cumulative_usd FROM income WHERE type = ? ORDER BY date LIMIT 30',("XRP",)).fetchall()
-    sum_cum = c.execute('SELECT sum(cumulative_usd) FROM income GROUP BY date ORDER BY date LIMIT 30').fetchall()
+    usdt = c.execute('SELECT date,cumulative_usd FROM income WHERE type = ? ORDER BY date LIMIT 30',("USDT",)).fetchall()
+    btc = c.execute('SELECT date,cumulative_usd FROM income WHERE type = ? ORDER BY date LIMIT 30',("BTC",)).fetchall()
+    eth = c.execute('SELECT date,cumulative_usd FROM income WHERE type = ? ORDER BY date LIMIT 30',("ETH",)).fetchall()
+    eos = c.execute('SELECT date,cumulative_usd FROM income WHERE type = ? ORDER BY date LIMIT 30',("EOS",)).fetchall()
+    xrp = c.execute('SELECT date,cumulative_usd FROM income WHERE type = ? ORDER BY date LIMIT 30',("XRP",)).fetchall()
+    sum_cum = c.execute('SELECT date,sum(cumulative_usd),sum(percentage_cum) FROM income GROUP BY date ORDER BY date LIMIT 30').fetchall()
     sum_all = c.execute('SELECT sum(wallet_usd) FROM income WHERE date = ?',(today,)).fetchone()
     sum_pnl = c.execute('SELECT sum(income_usd) FROM income WHERE date = ?',(today,)).fetchone()
     conn.commit()
     conn.close()
-    return render_template('tracker.html',data=data,dates=dates,usdt=usdt,btc=btc,eth=eth,eos=eos,xrp=xrp,sum_all=sum_all,sum_pnl=sum_pnl,sum_cum=sum_cum)
+    return render_template('tracker.html',data=data,usdt=usdt,btc=btc,eth=eth,eos=eos,xrp=xrp,sum_all=sum_all,sum_pnl=sum_pnl,sum_cum=sum_cum)
 #flask Core
 
 def tracker_worker():

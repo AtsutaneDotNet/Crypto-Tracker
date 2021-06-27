@@ -47,17 +47,12 @@
                 <canvas id="lineChart"></canvas>
                 <script>
                   const lineChart = {
-                    labels: [
-                      {% for dates in dates %}
-                        "{{ dates['date'] }}",
-                      {% endfor %}
-                    ],
                     datasets: [
                       {
                         label: "USDT",
                         data: [
                           {% for usdt in usdt %}
-                            "{{ usdt[0] }}",
+                            { x: "{{ usdt[0] }}", y: "{{ usdt[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
@@ -68,7 +63,7 @@
                         label: "BTC",
                         data: [
                           {% for btc in btc %}
-                            "{{ btc[0] }}",
+                            { x: "{{ btc[0] }}", y: "{{ btc[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
@@ -79,7 +74,7 @@
                         label: "EOS",
                         data: [
                           {% for eos in eos %}
-                            "{{ eos[0] }}",
+                            { x: "{{ eos[0] }}", y: "{{ eos[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
@@ -90,7 +85,7 @@
                         label: "ETH",
                         data: [
                           {% for eth in eth %}
-                            "{{ eth[0] }}",
+                            { x: "{{ eth[0] }}", y: "{{ eth[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
@@ -101,7 +96,7 @@
                         label: "XRP",
                         data: [
                           {% for xrp in xrp %}
-                            "{{ xrp[0] }}",
+                            { x: "{{ xrp[0] }}", y: "{{ xrp[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
@@ -112,11 +107,22 @@
                         label: "Cumulative PNL",
                         data: [
                           {% for sum_cum in sum_cum %}
-                            "{{ sum_cum[0] }}",
+                            { x: "{{ sum_cum[0] }}", y: "{{ sum_cum[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
                         borderColor: 'rgb(212, 175, 55)',
+                        tension: 0.1
+                      },
+                      {
+                        label: "Cumulative % PNL",
+                        data: [
+                          {% for sum_cum in sum_cum %}
+                            { x: "{{ sum_cum[0] }}", y: "{{ sum_cum[2] }}"},
+                          {% endfor %}
+                        ],
+                        fill: false,
+                        borderColor: 'rgb(192, 192, 192)',
                         tension: 0.1
                       },
                     ]
@@ -166,7 +172,7 @@
                     ],
                     datasets: [
                       {
-                        label: 'My First Dataset',
+                        label: 'Wallet Overviews',
                         data: [
                           {% for data in data %}
                             "{{ data['wallet_usd'] }}",
@@ -217,12 +223,14 @@
               <tr class="w3-theme">
                 <th>Type</th>
                 <th>Balance</th>
-                <th>Balance USD</th>
+                <th>Balance (USD)</th>
                 <th>Realize PNL</th>
                 <th>Commission</th>
                 <th>Funding Fee</th>
-                <th>Actual Profit</th>
-                <th>Actual Profit USD</th>
+                <th>PNL %</th>
+                <th>Actual PNL</th>
+                <th>Actual PNL (USD)</th>
+                <th>UUID</th>
               </tr>
             </thead>
             <tbody>
@@ -234,8 +242,10 @@
                 <td>{{ data['pnl'] }}</td>
                 <td>{{ data['commision'] }}</td>
                 <td>{{ data['funding'] }}</td>
+                <td>{{ data['percentage'] }}</td>
                 <td>{{ data['income'] }}</td>
                 <td>{{ "${:,.2f}".format(data['income_usd']) }}</td>
+                <td>{{ data['uuid'] }}</td>
               </tr>
               {% endfor %}
               <tr>
@@ -246,7 +256,9 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td></td>
                 <td>{{ "${:,.2f}".format(sum_pnl[0]) }}</td>
+                <td></td>
               </tr>
             </tbody>
           </table>

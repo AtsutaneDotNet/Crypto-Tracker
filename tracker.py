@@ -105,22 +105,22 @@ def getBinanceData(key,secret,uid):
     kickback_value = 0
     cum_pnl = 0
     cum_pct = 0
-    realized_pnl = exchange.fapiPrivateGetIncome({ 'incomeType': 'REALIZED_PNL' })
+    realized_pnl = exchange.fapiPrivateGetIncome({ 'incomeType': 'REALIZED_PNL', 'limit': '1000' })
     for profit in realized_pnl:
         type = profit['asset']
         if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             pnl_value = pnl_value + float(profit['income'])
-    commision = exchange.fapiPrivateGetIncome({ 'incomeType': 'COMMISSION' })
+    commision = exchange.fapiPrivateGetIncome({ 'incomeType': 'COMMISSION', 'limit': '1000' })
     for profit in commision:
         time = datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y")
         type = profit['asset']
         if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             comm_value = comm_value + float(profit['income'])
-    funding_fee = exchange.fapiPrivateGetIncome({ 'incomeType': 'FUNDING_FEE' })
+    funding_fee = exchange.fapiPrivateGetIncome({ 'incomeType': 'FUNDING_FEE', 'limit': '1000' })
     for profit in funding_fee:
         if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             funding_value = funding_value + float(profit['income'])
-    reff_kickback = exchange.fapiPrivateGetIncome({ 'incomeType': 'REFERRAL_KICKBACK' })
+    reff_kickback = exchange.fapiPrivateGetIncome({ 'incomeType': 'REFERRAL_KICKBACK', 'limit': '1000' })
     for profit in reff_kickback:
         if datetime.datetime.fromtimestamp(int(profit['time']) / 1000).strftime("%d/%m/%Y") == today:
             kickback_value = kickback_value + float(profit['income'])

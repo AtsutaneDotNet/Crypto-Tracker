@@ -276,7 +276,7 @@ def index():
     eth = c.execute('SELECT date,cumulative_usd FROM income WHERE type = ? ORDER BY timestamp LIMIT 30',("ETH",)).fetchall()
     eos = c.execute('SELECT date,cumulative_usd FROM income WHERE type = ? ORDER BY timestamp LIMIT 30',("EOS",)).fetchall()
     xrp = c.execute('SELECT date,cumulative_usd FROM income WHERE type = ? ORDER BY timestamp LIMIT 30',("XRP",)).fetchall()
-    sum_cum = c.execute('SELECT date,sum(cumulative_usd),sum(percentage_cum) FROM income GROUP BY date ORDER BY timestamp LIMIT 30').fetchall()
+    sum_cum = c.execute('SELECT date,sum(cumulative_usd),sum(percentage_cum),sum(income_usd) FROM income GROUP BY date ORDER BY timestamp LIMIT 30').fetchall()
     sum_all = c.execute('SELECT sum(wallet_usd) FROM income WHERE date = ?',(today,)).fetchone()
     sum_pnl = c.execute('SELECT sum(income_usd) FROM income WHERE date = ?',(today,)).fetchone()
     conn.commit()

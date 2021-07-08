@@ -15,10 +15,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript">
-      function loadref(time)
-      {
-      setTimeout("location.reload(true) ;",time) ;
-      }
+      const rgbColor = ['#0275d8', '#5cb85c', '#5bc0de', '#f0ad4e', '#d9534f', '#6d28f1', '#07c0e3', '#f2f954', '#fc8ed7', '#96eeb9'];
       function toggleMoney() {
         $('.money').each(function() {
           var $$ = $(this), t = $$.text();
@@ -50,79 +47,107 @@
                     datasets: [
                       {
                         label: "USDT",
+                        type: "line",
                         data: [
                           {% for usdt in usdt %}
                             { x: "{{ usdt[0] }}", y: "{{ usdt[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
-                        borderColor: 'rgb(0, 165, 80)',
+                        borderColor: rgbColor[1],
+                        backgroundColor: rgbColor[1],
                         tension: 0.1
                       },
                       {
                         label: "BTC",
+                        type: "line",
                         data: [
                           {% for btc in btc %}
                             { x: "{{ btc[0] }}", y: "{{ btc[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
-                        borderColor: 'rgb(255, 165, 0)',
+                        borderColor: rgbColor[2],
+                        backgroundColor: rgbColor[2],
                         tension: 0.1
                       },
                       {
                         label: "EOS",
+                        type: "line",
                         data: [
                           {% for eos in eos %}
                             { x: "{{ eos[0] }}", y: "{{ eos[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
-                        borderColor: 'rgb(172, 172, 172)',
+                        borderColor: rgbColor[3],
+                        backgroundColor: rgbColor[3],
                         tension: 0.1
                       },
                       {
                         label: "ETH",
+                        type: "line",
                         data: [
                           {% for eth in eth %}
                             { x: "{{ eth[0] }}", y: "{{ eth[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
-                        borderColor: 'rgb(102, 153, 204)',
+                        borderColor: rgbColor[4],
+                        backgroundColor: rgbColor[4],
                         tension: 0.1
                       },
                       {
                         label: "XRP",
+                        type: "line",
                         data: [
                           {% for xrp in xrp %}
                             { x: "{{ xrp[0] }}", y: "{{ xrp[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
-                        borderColor: 'rgb(93, 57, 84)',
+                        borderColor: rgbColor[5],
+                        backgroundColor: rgbColor[5],
                         tension: 0.1
                       },
                       {
-                        label: "Cumulative PNL",
+                        label: "Daily PNL",
+                        type: "bar",
+                        data: [
+                          {% for sum_cum in sum_cum %}
+                            { x: "{{ sum_cum[0] }}", y: "{{ sum_cum[3] }}"},
+                          {% endfor %}
+                        ],
+                        fill: false,
+                        backgroundColor: rgbColor,
+                        borderColor: rgbColor,
+                        tension: 0.1
+                      },
+                      {
+                        label: "Total PNL",
+                        type: "line",
                         data: [
                           {% for sum_cum in sum_cum %}
                             { x: "{{ sum_cum[0] }}", y: "{{ sum_cum[1] }}"},
                           {% endfor %}
                         ],
                         fill: false,
-                        borderColor: 'rgb(212, 175, 55)',
+                        borderColor: rgbColor[6],
+                        backgroundColor: rgbColor[6],
                         tension: 0.1
                       },
                       {
-                        label: "Cumulative % PNL",
+                        label: "Total PNL %",
+                        type: "line",
                         data: [
                           {% for sum_cum in sum_cum %}
                             { x: "{{ sum_cum[0] }}", y: "{{ sum_cum[2] }}"},
                           {% endfor %}
                         ],
                         fill: false,
-                        borderColor: 'rgb(192, 192, 192)',
+                        borderColor: rgbColor[7],
+                        backgroundColor: rgbColor[7],
+                        yAxisID: 'y1',
                         tension: 0.1
                       },
                     ]
@@ -145,6 +170,14 @@
                               color: "white",
                             }
                           }
+                        },
+                        scales: {
+                          y: {
+                            position: 'left',
+                          },
+                          y1: {
+                            position: 'right',
+                          },
                         }
                       }
                   });
@@ -178,13 +211,7 @@
                             "{{ data['wallet_usd'] }}",
                           {% endfor %}
                         ],
-                        backgroundColor: [
-                          'rgb(0, 165, 80)',
-                          'rgb(255, 165, 0)',
-                          'rgb(172, 172, 172)',
-                          'rgb(102, 153, 204)',
-                          'rgb(93, 57, 84)'
-                        ],
+                        backgroundColor: rgbColor,
                         hoverMode: 4
                       }
                     ]
@@ -230,7 +257,7 @@
                 <th>PNL %</th>
                 <th>Actual PNL</th>
                 <th>Actual PNL (USD)</th>
-                <th>UUID</th>
+                <th>Name</th>
               </tr>
             </thead>
             <tbody>
